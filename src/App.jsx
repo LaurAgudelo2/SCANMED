@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
-
+import { useState } from "react";
+import Servicios from "./Components/Servicios";
 
 
 const Header = () => (
@@ -27,13 +28,13 @@ const Header = () => (
   </header>
 );
 
-const HeroSection = () => (
+const HeroSection = ({ setMostrarServicios }) => (
   <section className="hero">
     <img src="/path-to-hero-image.jpg" alt="Hero" className="hero-img" />
     <div className="overlay">
       <div className="hero-buttons">
         <button className="btn">Inicio</button>
-        <button className="btn">Servicios</button>
+        <button className="btn" onClick={() => setMostrarServicios(true)}>Servicios</button>
         <button className="btn">Solicitar Cita</button>
         <button className="btn">Consulta de Resultados</button>
       </div>
@@ -177,17 +178,26 @@ const Footer = () => (
 );
 
 const ScanmedPage = () => {
+  const [mostrarServicios, setMostrarServicios] = useState(false); 
+
   return (
     <div>
-      <Header />
-      <HeroSection />
-      <BuildingSection />
-      <SedeSection />
-      <Specialties />
-      <Partners />
-      <Footer />
+      {mostrarServicios ? (
+        <Servicios /> 
+      ) : (
+        <>
+          <Header />
+          <HeroSection setMostrarServicios={setMostrarServicios} />
+          <BuildingSection />
+          <SedeSection />
+          <Specialties />
+          <Partners />
+          <Footer />
+        </>
+      )}
     </div>
   );
 };
+
 
 export default ScanmedPage;

@@ -1,7 +1,8 @@
 import React from "react";
-import "./Servicios.css";
+import "./servicios.css";
 
 const servicios = [
+
   {
     titulo: "MAMOGRAFÍA DIGITAL",
     descripcion:
@@ -59,6 +60,9 @@ const servicios = [
 ];
 
 const Servicios = () => {
+
+  const [volver, setVolver] = useState(false);
+
   return (
     <section className="servicios">
       <h2 className="titulo">NUESTROS SERVICIOS</h2>
@@ -68,6 +72,9 @@ const Servicios = () => {
             <img src={servicio.imagen} alt={servicio.titulo} />
             <h3>{servicio.titulo}</h3>
             <p>{servicio.descripcion}</p>
+
+            {/* handleHandleVolver(); */}
+            {/* setVolver(App); */}
           </div>
         ))}
       </div>
