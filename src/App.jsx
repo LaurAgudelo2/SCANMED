@@ -2,8 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import { useState } from "react";
-import Servicios from "./Components/Servicios";
-
+import Servicios from "./Components/servicios";
+import InicioSesion from "./Components/iniciosesion";
+import Registrarse from "./Components/Registrarse";
 
 const Header = () => (
   <header className="header">
@@ -28,21 +29,46 @@ const Header = () => (
   </header>
 );
 
-const HeroSection = ({ setMostrarServicios }) => (
-  <section className="hero">
-    <img src="/path-to-hero-image.jpg" alt="Hero" className="hero-img" />
-    <div className="overlay">
-      <div className="hero-buttons">
-        <button className="btn">Inicio</button>
-        <button className="btn" onClick={() => setMostrarServicios(true)}>Servicios</button>
-        <button className="btn">Solicitar Cita</button>
-        <button className="btn">Consulta de Resultados</button>
-      </div>
-      <button className="btnZona">ZONA TRANSICIONAL</button>
-    </div>
-  </section>
-);
 
+const HeroSection = ({ setMostrarServicios, setMostrarInicioSesion, setMostrarRegistrarse }) => {
+  const [mostrarOpciones, setMostrarOpciones] = useState(false);
+
+  return (
+    <section className="hero">
+      <img src="/path-to-hero-image.jpg" alt="Hero" className="hero-img" />
+      <div className="overlay">
+        <div className="hero-buttons">
+          <button className="btn">Inicio</button>
+          <button className="btn" onClick={() => setMostrarServicios(true)}>
+            Servicios
+          </button>
+          <button className="btn">Solicitar Cita</button>
+          <button className="btn" onClick={() => setMostrarInicioSesion(true)}>
+            Consulta de Resultados
+            </button>
+        </div>
+
+        <div 
+          className="zona-transicional-container"
+          onMouseEnter={() => setMostrarOpciones(true)}
+          onMouseLeave={() => setMostrarOpciones(false)}
+        >
+          <button className="btnZona">ZONA TRANSICIONAL</button>
+          {mostrarOpciones && (
+            <div className="dropdown-menu">
+              <button className="dropdown-btn" onClick={() => setMostrarRegistrarse(true)}>
+                Registrarse
+              </button>
+              <button className="dropdown-btn" onClick={() => setMostrarInicioSesion(true)}>
+                Iniciar Sesión
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+};
 
 const BuildingSection = () => (
   <section className="building">
@@ -70,15 +96,15 @@ const SedeSection = () => (
 
         {}
         <a href="https://www.ejemplo.com" target="_blank" rel="noopener noreferrer">
-          <img className="paci" src="pa.png" alt="pac" width={150} />
+          <img className="paci" src="pa.png" alt="pac" width={180} />
         </a>
 
         <a href="https://www.ejemplo.com" target="_blank" rel="noopener noreferrer">
-          <img className="dis" src="dis.png" alt="dis" width={150} />
+          <img className="dis" src="dis.png" alt="dis" width={180} />
         </a>
 
         <a href="https://www.ejemplo.com" target="_blank" rel="noopener noreferrer">
-          <img className="eq" src="eq.png" alt="eq" width={150} />
+          <img className="eq" src="eq.png" alt="eq" width={180} />
         </a>
       </div>
 
@@ -130,7 +156,7 @@ const Partners = () => (
 
 const Footer = () => (
   <footer className="footer">
-    <img className="LogoMar" src="LogoMar.png" alt="logoMar" width={300} />
+    <img className="LogoMar" src="LogoMar.png" alt="logoMar" width={330} />
 
     <p className="Contacta">
        Contactanos: </p>
@@ -178,16 +204,23 @@ const Footer = () => (
 );
 
 const ScanmedPage = () => {
-  const [mostrarServicios, setMostrarServicios] = useState(false); 
+  const [mostrarServicios, setMostrarServicios] = useState(false);
+  const [mostrarInicioSesion, setMostrarInicioSesion] = useState(false);
+  const [mostrarRegistrarse, setMostrarRegistrarse] = useState(false);
 
   return (
     <div>
-      {mostrarServicios ? (
-        <Servicios /> 
+      {  mostrarServicios ? (
+        <Servicios />
+      ) : mostrarInicioSesion ? (
+        <InicioSesion />
+      ) : mostrarRegistrarse ? (
+        <Registrarse/>
+      
       ) : (
         <>
           <Header />
-          <HeroSection setMostrarServicios={setMostrarServicios} />
+          <HeroSection setMostrarServicios={setMostrarServicios} setMostrarInicioSesion={setMostrarInicioSesion} setMostrarRegistrarse={setMostrarRegistrarse}/>
           <BuildingSection />
           <SedeSection />
           <Specialties />

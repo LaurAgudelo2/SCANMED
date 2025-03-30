@@ -1,0 +1,124 @@
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+
+  .container {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+  }
+  .left-section {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+  }
+  
+  .edificio {
+    width: 850px; 
+    margin-bottom: 150px;
+  }
+  
+  .logoim {
+    width: 560px; 
+    
+    height: auto; 
+    margin-top: -180px;
+    margin-bottom: 34px;
+    margin-left: 15px;  
+  }
+  
+  
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .input-field {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+
+  .loguito {
+    width: 400px;
+    margin-left: -430px;
+  }
+
+
+
+
+  .body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: url('/background.jpg') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+
+
+  .input-group {
+    margin-bottom: 1rem;
+    
+    
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 100px;
+    font-size: 1rem;
+    display: flex;
+    margin-left: px;
+    
+    
+  }
+  .login-box{
+    margin-left: 180px;
+  }
+  
+  .btn2 {
+    width: 75%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 100px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: 50px;
+  }
+  
+  .btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .links {
+    display: flex;
+    margin-left: 78px;
+    margin-top: 20px;
+    
+  }
+  
+  .links a {
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .links a:hover {
+    text-decoration: underline;
+  }

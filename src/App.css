@@ -1,12 +1,12 @@
-/* Estilos generales */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f7f7fe;
+  background-color: #fff;
+  width: 100%;
+  
 }
 
-/* Header */
 .header {
   background-color: #fcfcfd;
   position: relative;
@@ -27,6 +27,7 @@ body {
   text-decoration: none;
   margin: 50px;
   font-size: 10px;
+  width: 100%;
 }
 
 .nav a:hover {
@@ -79,7 +80,6 @@ body {
 }
 
 
-/* Hero Section */
 .hero {
   position: absolute;
   width: 100%;
@@ -113,11 +113,9 @@ body {
 .sede {
   display: flex;
   justify-content: center;
-  width: 70%;
+  width: 100%;
   position: relative;
-  margin-top: %;
   text-align: right;
-  
   background-color: #b5c0de;
   position: relative;
   width: 100%;
@@ -130,6 +128,7 @@ body {
 
 .sede-container {
   position: relative;
+  width: 100%;
 }
 
 .sede-img {
@@ -204,18 +203,18 @@ body {
   position: relative;
 }
 .building-img {
-  width: 100%;  /* Ajusta la imagen al ancho de la sección */
-  height: auto; /* Mantiene la proporción */
-  object-fit: cover; /* Ajusta la imagen sin deformarla */
-  max-width: 100%; /* Evita que la imagen sea más grande que la sección */
+  width: 100%;  /*  ancho img de la sección */
+  height: auto; /*  proporción */
+  object-fit: cover; /* acomodar img  sin deformarla */
+  max-width: 100%; /*img = tamaño sesion */
 }
 
 
 
-/* Especialidades */
 .specialties {
   text-align: center;
   padding: 20px;
+  width: 100%;
 }
 
 .section-title {
@@ -242,8 +241,8 @@ body {
 .especi {
   width: 50px;  /* Ajusta el tamaño de la imagen */
   height: 50px;
-  object-fit: cover; /* Evita distorsión */
-  margin-bottom: -8%; /* Espacio entre la imagen y el texto */
+  object-fit: cover; 
+  margin-bottom: -8%; /* LO DEspacio entre la imagen y el texto */
 }
 
 .specialty {
@@ -256,7 +255,6 @@ body {
   
 }
 
-/* Convenios */
 .partners {
   background-color: #002f6c;
   text-align: center;
@@ -283,13 +281,13 @@ body {
   height: 50px;
 }
 
-/* Footer */
 .footer {
   background-color: #002f6c;
   color: white;
   text-align: center;
   padding: 15px;
   height: 285px;
+  
 }
 
 .footer p {
@@ -301,9 +299,9 @@ body {
   margin-left: 90px;
 }
 .titu1{
-  font-size: 18px; /*tamaño letra*/
+  font-size: 18px; 
   color: #000000;
-  display: inline; /*alineacion*/ 
+  display: inline; 
   position: absolute; 
   left: 600px;
   margin-top: 20px;
@@ -333,10 +331,10 @@ body {
   font-size: 4vh;
   font-style: initial;
   font-weight: bold;
-  margin-top: 100px;
-  color: #002f6c;
+  margin-top: 75px;
+  color: #4b72a6;
   position: absolute;
-  margin-right: 900px;
+  margin-right: 890px;
 }
 .textoEspe{
   font-family: 'Times New Roman', Times, serif;
@@ -382,21 +380,21 @@ body {
 }
 .paci {
   position: absolute;
-  left: 750px;
-  top: 450px;
+  left: 700px;
+  top: 420px;
   margin-top: 18px;
 }
 .dis {
   position: absolute;
-  left: 980px;
-  top: 450px;
+  left: 970px;
+  top: 420px;
   margin-top: 18px;
 
 }
 .eq {
   position: absolute;
-  left: 1200px;
-  top: 450px;
+  left: 1245px;
+  top: 420px;
   margin-top: 18px; 
 }
 .Ubi2 {
@@ -421,30 +419,30 @@ body {
   height: auto;
   max-width: 550px;
   float: left;
-  margin-top: 80px ;
-  margin-left: 130px ;
+  margin-top: 85px ;
+  margin-left: 320px ;
   position: relative;
 }
 .Contacta {
   position: relative;
-  left: -310px;
+  left: -420px;
   top: 30px;
   font-weight: bold;
 }
 .gps{
-  margin-right: 685px; /*mover imagen der a izq*/
+  margin-right: 898px; /*mover imagen der a izq*/
   margin-top: 35px; /*mover de arriba abajo foto*/
 }
 .Ubicacion2 {
   position: relative; 
   top: -57px;
-  left: -240px;
+  left: -348px;
 }
 .celu{
   position: absolute;
   margin-right: 200px;
-  top: 1980px;
-  left: 618px;
+  top: 1920px;
+  left: 630px;
 
 }
 .telefonos {
@@ -455,14 +453,14 @@ body {
 .correo{
   position: relative;
   margin-right: 248px;
-  top: -100px;
+  top: -53px;
 
 }
 .correos{
   position: relative;
   top: -105px;
   text-align: justify;
-  left: 650px;
+  left: 815px;
   
 
 }
@@ -480,13 +478,13 @@ body {
 .insta{
   position: absolute;
   margin-right: 200px;
-  top: 1880px;
+  top: 1870px;
   left: 1008px;
 }
 .face{
   position: absolute;
   margin-right: 200px;
-  top: 1930px;
+  top: 1915px;
   left: 1008px;
 }
 .facebook{
@@ -496,7 +494,7 @@ body {
 }
 .link{
   position: relative;
-  left: 270px;
+  left: 255px;
   top: -226px; 
 }
 .lk{
@@ -504,3 +502,60 @@ body {
   left: 332px;
   top: -268px;
 }
+.zona-container {
+  position: relative;
+  display: inline-block;
+}
+
+.zona-transicional-container {
+  position: relative;
+  display: inline-block;
+}
+
+.btnZona {
+  padding: 10px 20px;
+  border: none;
+  background-color: #4A90E2;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: background 0.3s ease-in-out;
+}
+
+.btnZona:hover {
+  background-color: #357ABD;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 88%;
+  transform: translateX(-50%);
+  background: rgb(245, 242, 242);
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+}
+
+.dropdown-btn {
+  background: #87b2e9;;
+  color: rgb(249, 250, 252);
+  font-size: 16px;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 150px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.dropdown-btn:hover {
+  background: gray;
+}
+
