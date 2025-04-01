@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import { useState } from "react";
 import Servicios from "./Components/servicios";
-import InicioSesion from "./Components/iniciosesion";
+import InicioSesion from "./Components/InicioSesion";
 import Registrarse from "./Components/Registrarse";
 
 const Header = () => (
