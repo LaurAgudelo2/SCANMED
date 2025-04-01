@@ -98,21 +98,43 @@ button.loading::after {
   to { transform: rotate(360deg); }
 }
 
-.error-message {
+.registration-error {
   color: #e74c3c;
   background-color: #fadbd8;
-  padding: 12px;
-  border-radius: 6px;
-  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
   border: 1px solid #f5b7b1;
   position: relative;
-  text-align: left;
+  text-align: center;
 }
 
-.error-message button {
+.error-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.return-home-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin-top: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.return-home-button:hover {
+  background-color: #2980b9;
+}
+
+.close-error-button {
   position: absolute;
-  right: 8px;
-  top: 8px;
+  right: 10px;
+  top: 10px;
   background: none;
   border: none;
   color: #e74c3c;
@@ -128,21 +150,10 @@ button.loading::after {
   border-radius: 50%;
 }
 
-.error-message button:hover {
+.close-error-button:hover {
   background-color: rgba(231, 76, 60, 0.1);
 }
 
-@media (max-width: 480px) {
-  .registro-container {
-    padding: 15px;
-    width: 90%;
-  }
-  
-  input, select, button {
-    padding: 10px 12px;
-    font-size: 14px;
-  }
-}
 .success-message {
   color: #2ecc71;
   background-color: #d4efdf;
@@ -175,4 +186,16 @@ button.loading::after {
 
 .success-message button:hover {
   background-color: rgba(46, 204, 113, 0.1);
+}
+
+@media (max-width: 480px) {
+  .registro-container {
+    padding: 15px;
+    width: 90%;
+  }
+  
+  input, select, button {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
 }

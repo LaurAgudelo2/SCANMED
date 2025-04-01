@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./registrarse.css";
 
-
-
 const Registrarse = () => {
   const [formData, setFormData] = useState({
     primerNombre: "",
@@ -14,7 +12,7 @@ const Registrarse = () => {
     fechaNacimiento: "",
     tipoDocumento: "",
     numeroDocumento: "",
-    pais: "1", // Colombia por defecto
+    pais: "1",
     departamento: "",
     ciudad: "",
     direccion: "",
@@ -32,7 +30,11 @@ const Registrarse = () => {
     ciudades: false,
     registro: false
   });
-  const [error, setError] = useState(null);
+  const [registrationError, setRegistrationError] = useState({
+    message: '',
+    isUserExists: false
+  });
+  const [successMessage, setSuccessMessage] = useState(null);
 
   // Cargar tipos de documento al montar el componente
   useEffect(() => {
@@ -42,10 +44,16 @@ const Registrarse = () => {
         if (data.success) {
           setDocumentos(data.data);
         } else {
-          setError(data.message || "Error al cargar documentos");
+          setRegistrationError({
+            message: data.message || "Error al cargar documentos",
+            isUserExists: false
+          });
         }
       } catch (err) {
-        setError(err.response?.data?.message || "Error al conectar con el servidor");
+        setRegistrationError({
+          message: err.response?.data?.message || "Error al conectar con el servidor",
+          isUserExists: false
+        });
         console.error("Error cargando documentos:", err);
       } finally {
         setLoading(prev => ({ ...prev, documentos: false }));
@@ -60,7 +68,7 @@ const Registrarse = () => {
     const cargarDepartamentos = async () => {
       if (formData.pais) {
         setLoading(prev => ({ ...prev, departamentos: true }));
-        setError(null);
+        setRegistrationError({ message: '', isUserExists: false });
         
         try {
           const { data } = await axios.get(
@@ -76,10 +84,16 @@ const Registrarse = () => {
               ciudad: "" 
             }));
           } else {
-            setError(data.message || "Error al cargar departamentos");
+            setRegistrationError({
+              message: data.message || "Error al cargar departamentos",
+              isUserExists: false
+            });
           }
         } catch (err) {
-          setError(err.response?.data?.message || "Error al cargar departamentos");
+          setRegistrationError({
+            message: err.response?.data?.message || "Error al cargar departamentos",
+            isUserExists: false
+          });
           console.error("Error cargando departamentos:", err);
         } finally {
           setLoading(prev => ({ ...prev, departamentos: false }));
@@ -95,7 +109,7 @@ const Registrarse = () => {
     const cargarCiudades = async () => {
       if (formData.departamento) {
         setLoading(prev => ({ ...prev, ciudades: true }));
-        setError(null);
+        setRegistrationError({ message: '', isUserExists: false });
         
         try {
           const { data } = await axios.get(
@@ -106,10 +120,16 @@ const Registrarse = () => {
             setCiudades(data.data);
             setFormData(prev => ({ ...prev, ciudad: "" }));
           } else {
-            setError(data.message || "Error al cargar ciudades");
+            setRegistrationError({
+              message: data.message || "Error al cargar ciudades",
+              isUserExists: false
+            });
           }
         } catch (err) {
-          setError(err.response?.data?.message || "Error al cargar ciudades");
+          setRegistrationError({
+            message: err.response?.data?.message || "Error al cargar ciudades",
+            isUserExists: false
+          });
           console.error("Error cargando ciudades:", err);
         } finally {
           setLoading(prev => ({ ...prev, ciudades: false }));
@@ -128,14 +148,12 @@ const Registrarse = () => {
     }));
   };
 
-  const [successMessage, setSuccessMessage] = useState(null);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(prev => ({ ...prev, registro: true }));
-    setError(null);
+    setRegistrationError({ message: '', isUserExists: false });
     setSuccessMessage(null);
-  
+
     try {
       const { data } = await axios.post(
         "http://localhost:4000/api/registro",
@@ -155,11 +173,9 @@ const Registrarse = () => {
           contrasena: formData.contrasena
         }
       );
-  
+
       if (data.success) {
         setSuccessMessage("¡Registro exitoso! Por favor inicia sesión.");
-        
-        // Limpiar el formulario después del registro exitoso
         setFormData({
           primerNombre: "",
           segundoNombre: "",
@@ -178,40 +194,67 @@ const Registrarse = () => {
           contrasena: ""
         });
       } else {
-        setError(data.message || "Error en el registro");
+        setRegistrationError({
+          message: data.message || "Error en el registro",
+          isUserExists: data.userExists || false
+        });
       }
     } catch (err) {
-      setError(
-        err.response?.data?.message || 
-        "Error al registrar. Por favor intenta nuevamente."
-      );
+      const errorData = err.response?.data;
+      setRegistrationError({
+        message: errorData?.message || "Error al registrar. Por favor intenta nuevamente.",
+        isUserExists: errorData?.userExists || false
+      });
       console.error("Error en el registro:", err);
     } finally {
       setLoading(prev => ({ ...prev, registro: false }));
     }
   };
-  {successMessage && (
-    <div className="success-message">
-      {successMessage}
-      <button onClick={() => setSuccessMessage(null)}>×</button>
-    </div>
-  )}
-    
+
+  const RegistrationError = ({ error, onClose, onReturnHome }) => {
+    if (!error.message) return null;
+
+    return (
+      <div className="registration-error">
+        <div className="error-content">
+          <p>{error.message}</p>
+          {error.isUserExists && (
+            <button 
+              onClick={onReturnHome}
+              className="return-home-button"
+            >
+              Volver al Menú Principal
+            </button>
+          )}
+        </div>
+        <button onClick={onClose} className="close-error-button">×</button>
+      </div>
+    );
+  };
 
   return (
     <div className="registro-container">
       <h2>REGISTRATE</h2>
       <img src="Logo.png" alt="logo" className="LogoR" />
       
-      {error && (
-        <div className="error-message">
-          {error}
-          <button onClick={() => setError(null)}>×</button>
+      <RegistrationError 
+        error={registrationError}
+        onClose={() => setRegistrationError({ message: '', isUserExists: false })}
+        onReturnHome={() => {
+          // Aquí puedes usar navigate si estás usando react-router
+          // navigate('/');
+          window.location.href = '/'; // O redirige como prefieras
+        }}
+      />
+      
+      {successMessage && (
+        <div className="success-message">
+          {successMessage}
+          <button onClick={() => setSuccessMessage(null)}>×</button>
         </div>
       )}
       
       <form onSubmit={handleSubmit} className="registro-form">
-        {/* Campos del formulario */}
         <input
           type="text"
           name="primerNombre"
