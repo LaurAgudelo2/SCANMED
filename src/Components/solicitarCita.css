@@ -1,0 +1,72 @@
+.conte {
+    width: 100%;
+    max-width: 900px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-left: 350px;
+  }
+  .header4 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #92cbf9;
+    padding: 15px 20px;
+    border-radius: 10px 10px 0 0;
+    width: 1495px;
+    margin-left: -350px;
+    height: 80px;
+  }
+  .solicitar-cita-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1490px;
+    background: white;
+    padding: 20px;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 2px;
+    margin-left: -350px;
+  }
+ 
+
+ 
+  .nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+    font-size: 16px;
+    
+    
+  }
+  
+  .nav a:hover {
+    text-decoration: underline;
+  }
+  
+  .perfil2 {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    margin-right: 20px;
+    margin-left: -10px;
+    font-size: 15px;
+  }
+  .user{
+    margin-left: 20px;
+    margin-right: -10px;
+  }
+  .LogoSF{
+    width: 450PX;
+    margin-right: 600px;
+  }
+  .nav {
+    display: flex;
+    justify-content: flex-start; /* Alinea los botones a la izquierda */
+    margin-left: -200px; /* Ajusta la distancia desde el borde izquierdo */
+    margin-right: 100px;
+  }

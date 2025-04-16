@@ -5,6 +5,7 @@ import { useState } from "react";
 import Servicios from "./Components/servicios";
 import InicioSesion from "./Components/InicioSesion";
 import Registrarse from "./Components/Registrarse";
+import LoginMedicos from "./Components/LoginMedicos";
 
 const Header = () => (
   <header className="header">
@@ -30,7 +31,8 @@ const Header = () => (
 );
 
 
-const HeroSection = ({ setMostrarServicios, setMostrarInicioSesion, setMostrarRegistrarse }) => {
+const HeroSection = ({ setMostrarServicios, setMostrarInicioSesion, setMostrarRegistrarse, setMostrarLoginMedicos }) => {
+
   const [mostrarOpciones, setMostrarOpciones] = useState(false);
 
   return (
@@ -62,6 +64,11 @@ const HeroSection = ({ setMostrarServicios, setMostrarInicioSesion, setMostrarRe
               <button className="dropdown-btn" onClick={() => setMostrarInicioSesion(true)}>
                 Iniciar Sesión
               </button>
+              <button className="dropdown-btn" onClick={() => setMostrarLoginMedicos(true)}>
+                Portal Médicos
+              </button>
+
+               
             </div>
           )}
         </div>
@@ -207,20 +214,28 @@ const ScanmedPage = () => {
   const [mostrarServicios, setMostrarServicios] = useState(false);
   const [mostrarInicioSesion, setMostrarInicioSesion] = useState(false);
   const [mostrarRegistrarse, setMostrarRegistrarse] = useState(false);
+  const [mostrarLoginMedicos, setMostrarLoginMedicos] = useState(false);
+  
 
   return (
     <div>
-      {  mostrarServicios ? (
-        <Servicios />
+      { mostrarServicios ? (
+          <Servicios />
       ) : mostrarInicioSesion ? (
-        <InicioSesion />
+          <InicioSesion />
       ) : mostrarRegistrarse ? (
-        <Registrarse/>
-      
+          <Registrarse />
+      ) : mostrarLoginMedicos ? (
+          <LoginMedicos />
       ) : (
         <>
           <Header />
-          <HeroSection setMostrarServicios={setMostrarServicios} setMostrarInicioSesion={setMostrarInicioSesion} setMostrarRegistrarse={setMostrarRegistrarse}/>
+          <HeroSection 
+            setMostrarServicios={setMostrarServicios}
+            setMostrarInicioSesion={setMostrarInicioSesion}
+            setMostrarRegistrarse={setMostrarRegistrarse}
+            setMostrarLoginMedicos={setMostrarLoginMedicos}
+          />
           <BuildingSection />
           <SedeSection />
           <Specialties />

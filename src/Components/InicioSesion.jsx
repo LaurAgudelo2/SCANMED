@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import "./InicioSesion.css";
 import PerfilUsuario from "./PerfilUsuario"; 
-import axios from "axios"; // Asegúrate de tener axios instalado
+import RecuperarContraseña from "./RecuperarContraseña"; // Importamos el nuevo componente
+import axios from "axios";
 
 const InicioSesion = () => {
-  const [logueado, setLogueado] = useState(false); 
+  const [logueado, setLogueado] = useState(false);
+  const [usuario, setUsuario] = useState(null);  // Nuevo estado para almacenar los datos del usuario
   const [correo, setCorreo] = useState("");
   const [contrasena, setContrasena] = useState("");
   const [error, setError] = useState("");
+  const [mostrarRecuperar, setMostrarRecuperar] = useState(false); // Estado para mostrar RecuperarContraseña
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(""); // Reiniciar el mensaje de error
+    setError("");
 
     try {
       const response = await axios.post("http://localhost:4000/api/login", {
@@ -20,11 +23,11 @@ const InicioSesion = () => {
       });
 
       if (response.data.success) {
-        setLogueado(true); // Cambiar el estado a logueado
+        setLogueado(true);
+        setUsuario(response.data.usuario);  // Almacena los datos del usuario
       }
     } catch (err) {
       if (err.response) {
-        // Si hay una respuesta del servidor
         setError(err.response.data.message);
       } else {
         setError("Error en el servidor. Inténtalo de nuevo más tarde.");
@@ -34,13 +37,15 @@ const InicioSesion = () => {
 
   return (
     <div>
-      {logueado ? ( 
-        <PerfilUsuario /> 
+      {logueado ? (
+        <PerfilUsuario usuario={usuario} />  
+      ) : mostrarRecuperar ? (
+        <RecuperarContraseña onClose={() => setMostrarRecuperar(false)} /> 
       ) : (
         <div className="container">
           <div className="left-section">
             <img src="/EDIFICIO.png" alt="edificiologin" className="edificio"/>
-            <div className="logoo"> 
+            <div className="logoo">
               <img src="/Logo.png" alt="Logo" className="logoim" />
             </div>
           </div>
@@ -54,7 +59,7 @@ const InicioSesion = () => {
                   placeholder="Usuario-Email" 
                   className="input-field" 
                   value={correo}
-                  onChange={(e) => setCorreo(e.target.value)} // Actualizar el estado del correo
+                  onChange={(e) => setCorreo(e.target.value)}
                 />
               </div>
               <div className="input-group">
@@ -63,15 +68,15 @@ const InicioSesion = () => {
                   placeholder="Contraseña" 
                   className="input-field" 
                   value={contrasena}
-                  onChange={(e) => setContrasena(e.target.value)} // Actualizar el estado de la contraseña
+                  onChange={(e) => setContrasena(e.target.value)}
                 />
               </div>
               <button type="submit" className="btn2">ENTRAR</button>
             </form>
-            {error && <div className="error-message">{error}</div>} {/* Mostrar mensaje de error */}
+            {error && <div className="error-message">{error}</div>}
             <div className="links">
               <a href="#" className="registro"></a> 
-              <a href="#" className="contra">¿Olvidaste tu contraseña?</a>
+              <a href="#" className="contra" onClick={() => setMostrarRecuperar(true)}>¿Olvidaste tu contraseña?</a>
             </div>
           </div>
         </div>
