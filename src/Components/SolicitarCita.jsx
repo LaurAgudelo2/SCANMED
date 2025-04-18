@@ -22,6 +22,43 @@ const SolicitarCita = () => {
     "Telemetría"
   ];
 
+  // Cada vez que cambie médico, examen o fecha, comprobamos disponibilidad
+  useEffect(() => {
+    const { medico, examen, fecha } = formData;
+
+    // Si faltan datos, reseteamos el warning
+    if (!medico || !examen || !fecha) {
+      setIsAvailable(true);
+      setWarningMsg("");
+      return;
+    }
+
+    // buscamos la entrada para cada médico y tipo de examen
+    const entry = disponibilidad.find(
+      (e) => e.medicoId === parseInt(medico, 10) && e.examen === examen
+    );
+
+    // si no hay entrada, todo libre
+    if (!entry) {
+      setIsAvailable(true);
+      setWarningMsg("");
+      return;
+    }
+
+    // comparamos fechas de forma robusta
+    const slotTaken = entry.ocupadas.some((ocup) => {
+      // parseamos ambas como Date
+      const d1 = new Date(ocup).getTime();
+      const d2 = new Date(fecha).getTime();
+      return d1 === d2;
+    });
+
+    setIsAvailable(!slotTaken);
+    setWarningMsg(
+      slotTaken ? "⚠️ Lo sentimos, este horario ya no está disponible." : ""
+    );
+  }, [formData, disponibilidad]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
