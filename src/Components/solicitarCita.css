@@ -1,72 +1,173 @@
 .conte {
-    width: 100%;
-    max-width: 900px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    margin-left: 350px;
-  }
-  .header4 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #92cbf9;
-    padding: 15px 20px;
-    border-radius: 10px 10px 0 0;
-    width: 1495px;
-    margin-left: -350px;
-    height: 80px;
-  }
-  .solicitar-cita-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 1490px;
-    background: white;
-    padding: 20px;
-    border-radius: 0 0 10px 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 2px;
-    margin-left: -350px;
-  }
- 
+  width: 100%;
+  max-width: 900px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-left: 350px;
+}
 
- 
-  .nav a {
-    color: white;
-    text-decoration: none;
-    margin: 0 10px;
-    font-weight: bold;
-    font-size: 16px;
-    
-    
-  }
-  
-  .nav a:hover {
-    text-decoration: underline;
-  }
-  
-  .perfil2 {
-    display: flex;
-    align-items: center;
-    color: white;
-    font-weight: bold;
-    margin-right: 20px;
-    margin-left: -10px;
-    font-size: 15px;
-  }
-  .user{
-    margin-left: 20px;
-    margin-right: -10px;
-  }
-  .LogoSF{
-    width: 450PX;
-    margin-right: 600px;
-  }
-  .nav {
-    display: flex;
-    justify-content: flex-start; /* Alinea los botones a la izquierda */
-    margin-left: -200px; /* Ajusta la distancia desde el borde izquierdo */
-    margin-right: 100px;
-  }
+.header4 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #92cbf9;
+  padding: 15px 20px;
+  border-radius: 10px 10px 0 0;
+  width: 1495px;
+  margin-left: -350px;
+  height: 80px;
+}
+
+.solicitar-cita-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 1490px;
+  background: white;
+  padding: 20px;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 2px;
+  margin-left: -350px;
+}
+
+.nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
+.perfil2 {
+  display: flex;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  margin-right: 20px;
+  margin-left: -10px;
+  font-size: 15px;
+}
+
+.user {
+  margin-left: 20px;
+  margin-right: -10px;
+}
+
+.LogoSF {
+  width: 450px;
+  margin-right: 600px;
+}
+
+.nav {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: -200px;
+  margin-right: 100px;
+}
+
+/* Nuevos estilos añadidos */
+.error-text {
+  color: #d32f2f;
+  font-style: italic;
+}
+
+.error-message {
+  color: #d32f2f;
+  margin-top: 4px;
+  font-size: 0.85rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  text-align: left;
+}
+
+input, select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #45a049;
+}
+
+.btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.btn-cancel {
+  background-color: #f44336;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  transition: background-color 0.3s;
+}
+
+.btn-cancel:hover {
+  background-color: #d32f2f;
+}
+
+.confirmacion {
+  background-color: #f9f9f9;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.confirmacion p {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.confirmacion-botones {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.form-cita {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
