@@ -3,9 +3,12 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import { useState } from "react";
 import Servicios from "./Components/servicios";
+import PerfilUsuario from "./Components/PerfilUsuario"; // Asegúrate de importarlo
+
 import InicioSesion from "./Components/InicioSesion";
 import Registrarse from "./Components/Registrarse";
 import LoginMedicos from "./Components/LoginMedicos";
+
 
 const Header = () => (
   <header className="header">
@@ -211,6 +214,7 @@ const Footer = () => (
 );
 
 const ScanmedPage = () => {
+  const [usuarioLogueado, setUsuarioLogueado] = useState(null);
   const [mostrarServicios, setMostrarServicios] = useState(false);
   const [mostrarInicioSesion, setMostrarInicioSesion] = useState(false);
   const [mostrarRegistrarse, setMostrarRegistrarse] = useState(false);
@@ -219,14 +223,16 @@ const ScanmedPage = () => {
 
   return (
     <div>
-      { mostrarServicios ? (
-          <Servicios />
+      {usuarioLogueado ? (
+        <PerfilUsuario usuario={usuarioLogueado} />
+      ) : mostrarServicios ? (
+        <Servicios />
       ) : mostrarInicioSesion ? (
-          <InicioSesion />
+        <InicioSesion setUsuarioLogueado={setUsuarioLogueado} />
       ) : mostrarRegistrarse ? (
-          <Registrarse />
+        <Registrarse />
       ) : mostrarLoginMedicos ? (
-          <LoginMedicos />
+        <LoginMedicos />
       ) : (
         <>
           <Header />

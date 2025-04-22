@@ -149,3 +149,13 @@
   display: flex;
   gap: 15px;
 }
+
+.volver-btn {
+  margin: 20px;
+  padding: 10px 20px;
+  background-color: #d3d3d3;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
