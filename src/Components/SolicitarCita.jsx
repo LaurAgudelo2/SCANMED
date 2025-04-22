@@ -182,6 +182,33 @@ useEffect(() => {
     cargarDisponibilidad();
   }, [formData.doctorId]);
 
+  
+  useEffect(() => {
+    const { doctorId, fecha, hora } = formData;
+    if (!doctorId || !fecha || !hora) return;
+    const validarDisponibilidad = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/api/citas/disponible", {
+          params: { doctorId, fecha, hora }
+        });
+        if (!response.data.disponible) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Horario ocupado',
+            text: 'Este horario ya tiene una cita asignada.',
+          });
+          setFormData((prev) => ({ ...prev, hora: "" }));
+        }
+      } catch (error) {
+        console.error("Error al validar disponibilidad:", error);
+      }
+    };
+
+  
+    validarDisponibilidad();
+  }, [formData.doctorId, formData.fecha, formData.hora]);
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
