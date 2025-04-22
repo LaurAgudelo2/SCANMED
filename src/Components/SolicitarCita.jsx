@@ -383,7 +383,7 @@ useEffect(() => {
             <p><b>Hora:</b> {formData.hora}</p>
 
             <div className="confirmacion-botones">
-              <button className="btn" onClick={handleReserva}>
+              <button className="btn2" onClick={handleReserva}>
                 Confirmar Reserva
               </button>
               <button className="btn-cancel" onClick={() => setConfirmar(false)}>

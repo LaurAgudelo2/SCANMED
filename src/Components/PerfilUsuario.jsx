@@ -17,32 +17,31 @@ const PerfilUsuario = ({ usuario }) => {
 
 
   return (
+    
     <div className="perfil-container">
       {mostrarCita ? (
         <>
-          <button className="volver-btn" onClick={volverAlPerfil}>← Volver al perfil</button>
+          <button className="volver-btn" onClick={volverAlPerfil}>←</button>
           <SolicitarCita />
         </>
       ) : mostrarHistorial ? (
         <>
-          <button className="volver-btn" onClick={volverAlPerfil}>← Volver al perfil</button>
+          <button className="volver-btn" onClick={volverAlPerfil}>←</button>
           <HistorialCitas idUsuario={usuario.ID_USUARIO} />        
           </>
       ) : (
         <>
-          {/* Barra lateral */}
-          <aside className="sidebar">
-            <div className="user-info">
-              <h3>{usuario?.Primer_Nombre || "Aquí nombre del usuario"}</h3>
-            </div>
-            <button className="sidebar-btn">NUESTROS SERVICIOS</button>
-            <button className="sidebar-btn">CONTACTANOS</button>
-          </aside>
+     
 
-          {/* Contenido principal */}
-          <main className="profile-content">
-            <h2 className="welcome">BIENVENID@ "{usuario?.Primer_Nombre || "Nombre del usuario"}"</h2>
-            <div className="profile-details">
+     <main className="profile-content">
+  <h2 className="welcome">
+    Bienvenido/a,{" "}
+    {usuario?.Primer_Nombre || ""}{" "}
+    {usuario?.Segundo_Nombre || ""}{" "}
+    {usuario?.Primer_Apellido || "Nombre del usuario"}
+  </h2>
+  <div className="profile-details">
+
               <h3>MI PERFIL</h3>
               <div className="info-item">
                 <span className="label">NOMBRE</span>
@@ -58,10 +57,7 @@ const PerfilUsuario = ({ usuario }) => {
                 <span className="label">EDAD</span>
                 <span className="value">{usuario?.Edad || "-"}</span>
               </div>
-              <div className="info-item">
-                <span className="label">TIPO DE DOCUMENTO</span>
-                <span className="value">{usuario?.tipoDocumento || "-"}</span>
-              </div>
+              
               <div className="info-item">
                 <span className="label">NÚMERO DE DOCUMENTO</span>
                 <span className="value">{usuario?.Num_Documento || "-"}</span>
@@ -85,8 +81,7 @@ const PerfilUsuario = ({ usuario }) => {
           <aside className="header-section">
             <img src="Logo.png" alt="Logo" className="LogoPerfil" />
             <div className="header-links">
-              <button className="header-btn">INICIO</button>
-              <button className="header-btn">CERRAR SESIÓN</button>
+              <button className="header-btn2">←</button>
             </div>
           </aside>
 

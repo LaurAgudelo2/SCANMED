@@ -47,7 +47,9 @@ const HeroSection = ({ setMostrarServicios, setMostrarInicioSesion, setMostrarRe
           <button className="btn" onClick={() => setMostrarServicios(true)}>
             Servicios
           </button>
-          <button className="btn">Solicitar Cita</button>
+          <button className="btn"onClick={() => setMostrarInicioSesion(true)}>
+          Solicitar Cita
+          </button>
           <button className="btn" onClick={() => setMostrarInicioSesion(true)}>
             Consulta de Resultados
             </button>
