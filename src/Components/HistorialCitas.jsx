@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable';
+
+
+
+import scanmedLogo from './logoBase64'; // Asegúrate de que la ruta sea correcta
+
 import "./historialCitas.css";
 
 const HistorialCitas = ({ idUsuario }) => {
-  const [historial, setHistorial] = useState([]);
+  const [historial, setHistorial] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -39,12 +46,54 @@ const HistorialCitas = ({ idUsuario }) => {
       });
   }, [idUsuario]);
 
+  const events = Array.isArray(historial)
+    ? historial.map(cita => ({
+        title: `${cita.Nombre_Medico} — ${cita.Diagnostico}`,
+        start: new Date(cita.Fecha_Hora),
+        end:   new Date(new Date(cita.Fecha_Hora).getTime() + 60*60*1000)
+      }))
+    : [];
+
+  
+
+
+  const exportarPDF = () => {
+    
+    const doc = new jsPDF();
+  
+    const head = [["ID Cita", "Nombre Médico", "Nombre Paciente", "Fecha y Hora", "Diagnóstico"]];
+    const body = historial.map(cita => [
+      cita.ID_CITA,
+      cita.Nombre_Medico,
+      cita.Nombre_Paciente,
+      new Date(cita.Fecha_Hora).toLocaleString(),
+      cita.Diagnostico
+    ]);
+  
+    autoTable(doc, {
+      head,
+      body,
+      startY: 50,
+      didDrawPage: data => {
+        doc.addImage(scanmedLogo, "PNG", 15, 10, 50, 30);
+        doc.setFontSize(18);
+        doc.text("Historial de Consultas", doc.internal.pageSize.getWidth() / 2, 25, { align: "center" });
+      }
+    });
+  
+    doc.save("historial_citas.pdf");
+  };
+  
+  
+  
   if (loading) return <p>Cargando historial...</p>;
   if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
 
   return (
     <div className="historial-container">
       <h2>Historial de Consultas</h2>
+      <button onClick={exportarPDF}>Descargar PDF</button>
+
       {historial.length === 0 ? (
         <p>No hay consultas registradas.</p>
       ) : (

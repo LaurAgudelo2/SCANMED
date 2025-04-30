@@ -266,9 +266,10 @@ useEffect(() => {
         });
   
         // Enviar datos al servidor
+        const fechaHora = `${formData.fecha} ${horaFormateada}`;
         const response = await axios.post("http://localhost:4000/api/citas", {
           ...formData,
-          hora: horaFormateada
+          fecha: fechaHora
         });
   
         // Cerrar alerta de carga
