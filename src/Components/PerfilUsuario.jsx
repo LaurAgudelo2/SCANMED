@@ -1,35 +1,53 @@
 import React, { useState } from "react";
 import SolicitarCita from "./SolicitarCita";
 import HistorialCitas from "./HistorialCitas";
+import HistorialResultados from "./HistorialResultados";
+
 import axios from "axios";
 import "./perfilUsuario.css";
 
 const PerfilUsuario = ({ usuario }) => {
-
-  
   const [mostrarCita, setMostrarCita] = useState(false);
   const [mostrarHistorial, setMostrarHistorial] = useState(false);
+  const [mostrarResultados, setMostrarResultados] = useState(false);
 
   const volverAlPerfil = () => {
     setMostrarCita(false);
     setMostrarHistorial(false);
+    setMostrarResultados(false);
+
+
   };
 
 
   return (
     <div className="perfil-container">
+          {/* Botón de volver siempre visible cuando está en una subvista */}
+    {(mostrarCita || mostrarHistorial || mostrarResultados ) && (
+      <button 
+        className="volver-btn"
+        onClick={volverAlPerfil}
+      >
+        ← Volver al perfil
+      </button>
+    )}
+
       {mostrarCita ? (
         <>
-          <button className="volver-btn" onClick={volverAlPerfil}>← Volver al perfil</button>
-          <SolicitarCita />
-        </>
+      <SolicitarCita onVolver={volverAlPerfil} />
+</>
       ) : mostrarHistorial ? (
         <>
-          <button className="volver-btn" onClick={volverAlPerfil}>← Volver al perfil</button>
           <HistorialCitas idUsuario={usuario.ID_USUARIO} />        
-          </>
+        </>
+
+      ) : mostrarResultados ? (  // <-- Esta condición DEBE IR ÚLTIMA
+        <>
+          <HistorialResultados idUsuario={usuario.ID_USUARIO} />
+        </>
       ) : (
         <>
+
           {/* Barra lateral */}
           <aside className="sidebar">
             <div className="user-info">
@@ -95,7 +113,11 @@ const PerfilUsuario = ({ usuario }) => {
             <button className="action-btn" onClick={() => setMostrarCita(true)}>
               SOLICITAR CITA
             </button>
-            <button className="action-btn">RESULTADOS</button>
+            <button className="action-btn" onClick={() => setMostrarResultados(true)}>
+              RESULTADOS
+            </button>
+              {/* Botón visible para todos durante pruebas */}
+
             <button className="action-btn" onClick={() => setMostrarHistorial(true)}>
               HISTORIAL
             </button>

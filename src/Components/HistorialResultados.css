@@ -1,0 +1,76 @@
+.historial-resultados-container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.resultados-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+
+.resultados-table th, 
+.resultados-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  color: #444;
+}
+
+.resultados-table td:first-child {
+  min-width: 120px;
+}
+
+.resultados-table th {
+  background-color: #3498db;
+  color: white;
+  font-weight: 600;
+}
+
+.resultados-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+.download-btn {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: transform 0.2s;
+
+}
+.download-btn:active {
+  transform: scale(0.95);
+}
+
+.download-btn.loading {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+
+.download-btn:hover {
+  background-color: #219653;
+  transform: translateY(-1px);
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #3498db;
+  font-size: 1.2em;
+}
+
+.error {
+  text-align: center;
+  padding: 20px;
+  color: #e74c3c;
+  font-size: 1.2em;
+}

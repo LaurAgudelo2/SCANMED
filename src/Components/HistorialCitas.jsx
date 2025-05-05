@@ -12,6 +12,8 @@ const HistorialCitas = ({ idUsuario }) => {
   const [historial, setHistorial] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [editing, setEditing] = useState({}); 
+  const [observaciones, setObservaciones] = useState({});
 
   useEffect(() => {
     console.log("ID del paciente en HistorialCitas:", idUsuario);  // Verifica el valor del ID
@@ -46,6 +48,41 @@ const HistorialCitas = ({ idUsuario }) => {
       });
   }, [idUsuario]);
 
+  const handleCheckbox = (id) => {
+    setEditing((prev) => ({ ...prev, [id]: !prev[id] }));
+    if (!editing[id]) {
+      // initialize with existing observation if any
+      const existing = historial.find((c) => c.ID_CITA === id).Observacion || "";
+      setObservaciones((prev) => ({ ...prev, [id]: existing }));
+    }
+  };
+
+  const handleChange = (id, text) => {
+    if (text.length <= 275) {
+      setObservaciones((prev) => ({ ...prev, [id]: text }));
+    }
+  };
+
+  const saveObservacion = (id) => {
+    const obs = observaciones[id] || "";
+    axios
+      .post(
+        `http://localhost:4000/api/resultados/${id}/observacion`,
+        { observacion: obs }
+      )
+      .then(() => {
+        setHistorial((prev) =>
+          prev.map((c) =>
+            c.ID_CITA === id ? { ...c, Observacion: obs } : c
+          )
+        );
+        setEditing((prev) => ({ ...prev, [id]: false }));
+      })
+      .catch((err) => alert("Error al guardar: " + err.message));
+  };
+
+
+
   const events = Array.isArray(historial)
     ? historial.map(cita => ({
         title: `${cita.Nombre_Medico} — ${cita.Diagnostico}`,
@@ -61,13 +98,15 @@ const HistorialCitas = ({ idUsuario }) => {
     
     const doc = new jsPDF();
   
-    const head = [["ID Cita", "Nombre Médico", "Nombre Paciente", "Fecha y Hora", "Diagnóstico"]];
+    const head = [["ID Cita", "Nombre Médico", "ID Paciente", "Nombre Paciente", "Fecha y Hora", "Diagnóstico"]];
     const body = historial.map(cita => [
+      cita.ID_PACIENTE,
       cita.ID_CITA,
       cita.Nombre_Medico,
       cita.Nombre_Paciente,
       new Date(cita.Fecha_Hora).toLocaleString(),
-      cita.Diagnostico
+      cita.Diagnostico,
+      cita.Observacion || ""
     ]);
   
     autoTable(doc, {
@@ -102,9 +141,12 @@ const HistorialCitas = ({ idUsuario }) => {
             <tr>
               <th>ID Cita</th>
               <th>Nombre Médico</th>
+              <th>ID Paciente</th>
               <th>Nombre Paciente</th>
               <th>Fecha y Hora</th>
               <th>Diagnóstico</th>
+              <th>Observaciones</th>
+              <th>Editar</th>
             </tr>
           </thead>
           <tbody>
@@ -112,9 +154,40 @@ const HistorialCitas = ({ idUsuario }) => {
               <tr key={cita.ID_CITA}>
                 <td>{cita.ID_CITA}</td>
                 <td>{cita.Nombre_Medico}</td>
+                <td>{cita.ID_PACIENTE}</td>
                 <td>{cita.Nombre_Paciente}</td>
                 <td>{new Date(cita.Fecha_Hora).toLocaleString()}</td>
                 <td>{cita.Diagnostico}</td>
+                <td>
+                  {editing[cita.ID_CITA] ? (
+                    <>
+                      <textarea
+                        value={observaciones[cita.ID_CITA]}
+                        onChange={(e) => handleChange(cita.ID_CITA, e.target.value)}
+                        maxLength={275}
+                        rows={3}
+                      />
+                      <div className="char-count">
+                        {observaciones[cita.ID_CITA]?.length || 0}/275
+                      </div>
+                      <button
+                        className="save-btn"
+                        onClick={() => saveObservacion(cita.ID_CITA)}
+                      >
+                        Guardar
+                      </button>
+                    </>
+                  ) : (
+                    cita.Observacion || "-"
+                  )}
+                </td>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={!!editing[cita.ID_CITA]}
+                    onChange={() => handleCheckbox(cita.ID_CITA)}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>
