@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import axios from 'axios';
 import PerfilMedicos from './PerfilMedicos';
 import './LoginMedicos.css';
@@ -7,6 +7,7 @@ const LoginMedicos = () => {
   const [logueado, setLogueado] = useState(false);
   const [credenciales, setCredenciales] = useState({ correo: '', contrasena: '' });
   const [error, setError] = useState('');
+  const [medicoInfo, setMedicoInfo] = useState(null);
 
   const handleChange = (e) => {
     setCredenciales({ ...credenciales, [e.target.name]: e.target.value });
@@ -17,10 +18,10 @@ const LoginMedicos = () => {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:4000/api/login', credenciales);
-      const { success, rol } = response.data;
+      const { data } = await axios.post('http://localhost:4000/api/login', credenciales);
 
-      if (success && rol === 'MEDICO') {
+      if (data.success && data.role === 'MEDICO') {
+        setMedicoInfo(data.medico);
         setLogueado(true);
       } else {
         setError("No tienes acceso como médico.");
@@ -30,8 +31,9 @@ const LoginMedicos = () => {
     }
   };
 
-  if (logueado) {
-    return <PerfilMedicos />;
+  // Si ya está logueado, muestro perfil y paso los datos del médico
+  if (logueado && medicoInfo) {
+    return <PerfilMedicos medicoInfo={medicoInfo} />;
   }
 
   return (
