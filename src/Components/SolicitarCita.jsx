@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./solicitarCita.css";
+import FuncionPago from './FuncionPago';
 import Swal from 'sweetalert2';
 
 const SolicitarCita = () => {
@@ -14,7 +15,6 @@ const SolicitarCita = () => {
     fecha: "",
     hora: ""
   });
-  
 
   const [servicios, setServicios] = useState([]);
   const [doctores, setDoctores] = useState([]);
@@ -24,6 +24,11 @@ const SolicitarCita = () => {
     servicios: true,
     doctores: false,
     disponibilidad: false
+  });
+  const [showPayment, setShowPayment] = useState(false);
+  const [paymentData, setPaymentData] = useState({
+    servicio: '',
+    precio: 0
   });
   const [errors, setErrors] = useState({
     servicios: null,
@@ -38,7 +43,7 @@ const SolicitarCita = () => {
         console.log("🔄 Iniciando carga de servicios desde frontend...");
         setLoading(prev => ({ ...prev, servicios: true }));
         setErrors(prev => ({ ...prev, servicios: null }));
-        
+
         const response = await axios.get("http://localhost:4000/api/servicios", {
           timeout: 8000,
           headers: {
@@ -46,12 +51,12 @@ const SolicitarCita = () => {
             'Accept': 'application/json'
           }
         });
-        
+
         console.log("📦 Respuesta completa de la API:", {
           status: response.status,
           data: response.data
         });
-        
+
         if (response.status === 200 && response.data.success) {
           if (response.data.data && response.data.data.length > 0) {
             setServicios(response.data.data);
@@ -64,31 +69,25 @@ const SolicitarCita = () => {
         }
       } catch (error) {
         let errorMessage = "Error al cargar servicios";
-        
+
         if (error.code === 'ECONNABORTED') {
           errorMessage = "Tiempo de espera agotado. El servidor no respondió.";
         } else if (error.response) {
-          // El servidor respondió con un código de error
           console.error("❌ Error de respuesta:", {
             status: error.response.status,
             data: error.response.data
           });
-          
-          errorMessage = error.response.data.message || 
+
+          errorMessage = error.response.data.message ||
                         `Error ${error.response.status}: ${error.response.statusText}`;
         } else if (error.request) {
-          // La solicitud fue hecha pero no hubo respuesta
           console.error("❌ No hubo respuesta del servidor:", error.request);
-          errorMessage = "El servidor no respondió. Verifica:";
-          errorMessage += "\n1. Que el backend esté corriendo";
-          errorMessage += "\n2. Que el puerto (4000) sea correcto";
-          errorMessage += "\n3. Que no haya errores de CORS";
+          errorMessage = "El servidor no respondió. Verifica:\n1. Que el backend esté corriendo\n2. Que el puerto (4000) sea correcto\n3. Que no haya errores de CORS";
         } else {
-          // Error al configurar la solicitud
           console.error("❌ Error de configuración:", error.message);
           errorMessage = error.message || "Error desconocido";
         }
-        
+
         setErrors(prev => ({ ...prev, servicios: errorMessage }));
       } finally {
         setLoading(prev => ({ ...prev, servicios: false }));
@@ -98,53 +97,50 @@ const SolicitarCita = () => {
     cargarServicios();
   }, []);
 
-
   // Cargar doctores cuando se selecciona un servicio
- // Cargar doctores cuando se selecciona un servicio
-useEffect(() => {
-  if (!formData.servicioId) {
-    setDoctores([]);
-    setFormData(prev => ({ ...prev, doctorId: "", fecha: "", hora: "" }));
-    return;
-  }
-
-  const cargarDoctores = async () => {
-    try {
-      setLoading(prev => ({ ...prev, doctores: true }));
-      setErrors(prev => ({ ...prev, doctores: null }));
-      
-      const response = await axios.get(
-        `http://localhost:4000/api/medicos/servicio/${formData.servicioId}`
-      );
-
-      if (response.data.success) {
-        if (response.data.data.length === 0) {
-          setErrors(prev => ({
-            ...prev,
-            doctores: "No hay médicos disponibles para este servicio"
-          }));
-          setDoctores([]);
-        } else {
-          setDoctores(response.data.data);
-        }
-      } else {
-        throw new Error(response.data.message || "Datos de doctores no recibidos");
-      }
-    } catch (error) {
-      console.error("Error al cargar doctores:", error);
-      setErrors(prev => ({
-        ...prev,
-        doctores: error.message || "Error al cargar doctores"
-      }));
+  useEffect(() => {
+    if (!formData.servicioId) {
       setDoctores([]);
-    } finally {
-      setLoading(prev => ({ ...prev, doctores: false }));
+      setFormData(prev => ({ ...prev, doctorId: "", fecha: "", hora: "" }));
+      return;
     }
-  };
 
-  cargarDoctores();
-}, [formData.servicioId]);
+    const cargarDoctores = async () => {
+      try {
+        setLoading(prev => ({ ...prev, doctores: true }));
+        setErrors(prev => ({ ...prev, doctores: null }));
 
+        const response = await axios.get(
+          `http://localhost:4000/api/medicos/servicio/${formData.servicioId}`
+        );
+
+        if (response.data.success) {
+          if (response.data.data.length === 0) {
+            setErrors(prev => ({
+              ...prev,
+              doctores: "No hay médicos disponibles para este servicio"
+            }));
+            setDoctores([]);
+          } else {
+            setDoctores(response.data.data);
+          }
+        } else {
+          throw new Error(response.data.message || "Datos de doctores no recibidos");
+        }
+      } catch (error) {
+        console.error("Error al cargar doctores:", error);
+        setErrors(prev => ({
+          ...prev,
+          doctores: error.message || "Error al cargar doctores"
+        }));
+        setDoctores([]);
+      } finally {
+        setLoading(prev => ({ ...prev, doctores: false }));
+      }
+    };
+
+    cargarDoctores();
+  }, [formData.servicioId]);
 
   // Cargar disponibilidad cuando se selecciona un doctor
   useEffect(() => {
@@ -158,7 +154,7 @@ useEffect(() => {
       try {
         setLoading(prev => ({ ...prev, disponibilidad: true }));
         setErrors(prev => ({ ...prev, disponibilidad: null }));
-        
+
         const response = await axios.get(
           `http://localhost:4000/api/disponibilidad/${formData.doctorId}`
         );
@@ -182,14 +178,12 @@ useEffect(() => {
     cargarDisponibilidad();
   }, [formData.doctorId]);
 
-  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleConfirmar = () => {
-    // Validación de campos obligatorios
     const camposRequeridos = [
       { field: "nombre", name: "Nombre" },
       { field: "apellidos", name: "Apellidos" },
@@ -206,11 +200,13 @@ useEffect(() => {
     );
 
     if (camposFaltantes.length > 0) {
-      alert(
-        `Por favor complete los siguientes campos:\n${camposFaltantes
-          .map(item => `- ${item.name}`)
-          .join("\n")}`
-      );
+      Swal.fire({
+        title: 'Campos incompletos',
+        html: `Por favor complete los siguientes campos:<br>${camposFaltantes
+          .map(item => `• ${item.name}`)
+          .join("<br>")}`,
+        icon: 'warning'
+      });
       return;
     }
 
@@ -219,15 +215,18 @@ useEffect(() => {
 
   const handleReserva = async () => {
     try {
-      // Formatear hora correctamente
       let horaFormateada = formData.hora;
       if (!horaFormateada.includes(':')) {
         horaFormateada += ':00';
       } else if (horaFormateada.split(':')[1].length === 1) {
         horaFormateada = horaFormateada.replace(/:(\d)$/, ':0$1');
       }
-  
-      // Mostrar confirmación
+
+      const servicioSeleccionado = servicios.find(s => s.id === parseInt(formData.servicioId));
+      if (!servicioSeleccionado) {
+        throw new Error('Servicio no encontrado');
+      }
+
       const confirmacion = await Swal.fire({
         title: 'Confirmar Reserva',
         html: `
@@ -235,9 +234,8 @@ useEffect(() => {
             <p><strong>Paciente:</strong> ${formData.nombre} ${formData.apellidos}</p>
             <p><strong>Documento:</strong> ${formData.documento}</p>
             <p><strong>Correo:</strong> ${formData.correo}</p>
-            <p><strong>Servicio:</strong> ${
-              servicios.find(s => s.id === parseInt(formData.servicioId))?.nombre
-            }</p>
+            <p><strong>Servicio:</strong> ${servicioSeleccionado.nombre}</p>
+            <p><strong>Precio:</strong> $${parseFloat(servicioSeleccionado.precio).toFixed(2)}</p>
             <p><strong>Médico:</strong> ${
               doctores.find(d => d.ID_MEDICO === parseInt(formData.doctorId))?.Primer_Nombre
             } ${
@@ -249,94 +247,109 @@ useEffect(() => {
         `,
         icon: 'question',
         showCancelButton: true,
-        confirmButtonText: 'Confirmar Reserva',
+        confirmButtonText: 'Pagar Ahora',
         cancelButtonText: 'Cancelar',
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33'
       });
-  
+
       if (confirmacion.isConfirmed) {
-        // Mostrar carga mientras se procesa
-        Swal.fire({
-          title: 'Procesando reserva',
-          html: 'Por favor espere...',
-          allowOutsideClick: false,
-          didOpen: () => {
-            Swal.showLoading();
-          }
+        console.log('Abriendo formulario de pago con:', {
+          servicio: servicioSeleccionado.nombre,
+          precio: servicioSeleccionado.precio
         });
-  
-        // Enviar datos al servidor
-        const response = await axios.post("http://localhost:4000/api/citas", {
-          ...formData,
-          hora: horaFormateada
+        setPaymentData({
+          servicio: servicioSeleccionado.nombre,
+          precio: parseFloat(servicioSeleccionado.precio)
         });
-  
-        // Cerrar alerta de carga
-        Swal.close();
-  
-        if (response.data.success) {
-          // Mostrar comprobante de reserva
-          await Swal.fire({
-            title: '¡Reserva Exitosa!',
-            html: `
-              <div style="text-align: left;">
-                <h3 style="color: #2c3e50; margin-bottom: 1rem;">Comprobante de Cita</h3>
-                <p><strong>Número de Cita:</strong> ${response.data.data.citaId}</p>
-                <p><strong>Paciente:</strong> ${response.data.data.paciente}</p>
-                <p><strong>Médico:</strong> ${response.data.data.medico}</p>
-                <p><strong>Servicio:</strong> ${response.data.data.servicio}</p>
-                <p><strong>Fecha:</strong> ${response.data.data.fecha}</p>
-                <p><strong>Hora:</strong> ${response.data.data.hora}</p>
-                <hr style="margin: 1rem 0;">
-                <p>Recibirá un correo de confirmación en <strong>${formData.correo}</strong></p>
-              </div>
-            `,
-            icon: 'success',
-            confirmButtonText: 'Aceptar'
-          });
-  
-          // Resetear formulario
-          setFormData({
-            nombre: "",
-            apellidos: "",
-            documento: "",
-            correo: "",
-            servicioId: "",
-            doctorId: "",
-            fecha: "",
-            hora: ""
-          });
-          setConfirmar(false);
-          
-          // Recargar disponibilidad
-          if (formData.doctorId) {
-            const disponibilidadResponse = await axios.get(
-              `http://localhost:4000/api/disponibilidad/${formData.doctorId}`
-            );
-            setDisponibilidad(disponibilidadResponse.data.data);
-          }
-          
+        setShowPayment(true);
+      }
+    } catch (error) {
+      console.error("Error al confirmar reserva:", error);
+      Swal.fire('Error', error.message || 'Ocurrió un error al procesar tu reserva', 'error');
+    }
+  };
+
+  const handlePaymentSuccess = async () => {
+    try {
+      Swal.fire({
+        title: 'Procesando reserva',
+        html: 'Por favor espere...',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
+      let horaFormateada = formData.hora;
+      if (!horaFormateada.includes(':')) {
+        horaFormateada += ':00';
+      } else if (horaFormateada.split(':')[1].length === 1) {
+        horaFormateada = horaFormateada.replace(/:(\d)$/, ':0$1');
+      }
+
+      const response = await axios.post("http://localhost:4000/api/citas", {
+        ...formData,
+        hora: horaFormateada
+      });
+
+      Swal.close();
+
+      if (response.data.success) {
+        await Swal.fire({
+          title: '¡Reserva Exitosa!',
+          html: `
+            <div style="text-align: left;">
+              <h3 style="color: #2c3e50; margin-bottom: 1rem;">Comprobante de Cita</h3>
+              <p><strong>Número de Cita:</strong> ${response.data.data.citaId}</p>
+              <p><strong>Paciente:</strong> ${response.data.data.paciente}</p>
+              <p><strong>Médico:</strong> ${response.data.data.medico}</p>
+              <p><strong>Servicio:</strong> ${response.data.data.servicio}</p>
+              <p><strong>Precio:</strong> $${parseFloat(paymentData.precio).toFixed(2)}</p>
+              <p><strong>Fecha:</strong> ${response.data.data.fecha}</p>
+              <p><strong>Hora:</strong> ${response.data.data.hora}</p>
+              <hr style="margin: 1rem 0;">
+              <p>Recibirá un correo de confirmación en <strong>${formData.correo}</strong></p>
+            </div>
+          `,
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
+
+        setFormData({
+          nombre: "",
+          apellidos: "",
+          documento: "",
+          correo: "",
+          servicioId: "",
+          doctorId: "",
+          fecha: "",
+          hora: ""
+        });
+        setConfirmar(false);
+        setShowPayment(false);
+
+        if (formData.doctorId) {
+          const disponibilidadResponse = await axios.get(
+            `http://localhost:4000/api/disponibilidad/${formData.doctorId}`
+          );
+          setDisponibilidad(disponibilidadResponse.data.data);
         }
       }
-    }catch (error) {
+    } catch (error) {
       console.error("Error al reservar cita:", error);
       Swal.close();
-      
+
       let errorMessage = "Error al procesar la reserva";
       if (error.response) {
         errorMessage = error.response.data.message || errorMessage;
-        
-        // Manejar específicamente el caso de usuario no registrado
         if (error.response.data.message.includes("Usuario no registrado")) {
           errorMessage += ". Por favor complete su registro primero.";
-        }
-        // Manejar caso de correo no coincidente
-        else if (error.response.data.message.includes("El correo no coincide")) {
+        } else if (error.response.data.message.includes("El correo no coincide")) {
           errorMessage += ". Verifique sus datos de contacto.";
         }
       }
-  
+
       Swal.fire({
         title: 'Error',
         html: `<div style="text-align: left;">${errorMessage}</div>`,
@@ -344,7 +357,6 @@ useEffect(() => {
       });
     }
   };
-  
 
   return (
     <div className="conte">
@@ -375,6 +387,9 @@ useEffect(() => {
             <p><b>Servicio:</b> {
               servicios.find(s => s.id === parseInt(formData.servicioId))?.nombre
             }</p>
+            <p><b>Precio:</b> ${
+              parseFloat(servicios.find(s => s.id === parseInt(formData.servicioId))?.precio || 0).toFixed(2)
+            }</p>
             <p><b>Doctor:</b> {
               doctores.find(d => d.ID_MEDICO === parseInt(formData.doctorId))?.Primer_Nombre
             } {
@@ -391,6 +406,16 @@ useEffect(() => {
                 Cancelar
               </button>
             </div>
+
+            {showPayment && (
+              <FuncionPago
+                servicio={paymentData.servicio}
+                precio={paymentData.precio}
+                onPaymentSuccess={handlePaymentSuccess}
+                onClose={() => setShowPayment(false)}
+                formData={formData}
+              />
+            )}
           </div>
         ) : (
           <form className="form-cita" onSubmit={(e) => e.preventDefault()}>
@@ -531,7 +556,7 @@ useEffect(() => {
                   ))
                 )}
               </select>
-              {errors.disponibilidad && !loading.disponibilidad && (
+              {errors.disponibilidad && ! loading.disponibilidad && (
                 <p className="error-message">{errors.disponibilidad}</p>
               )}
             </div>

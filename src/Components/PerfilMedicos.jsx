@@ -10,8 +10,3 @@ const PerfilMedico = () => {
 };
 
 export default PerfilMedico;
-    </div>
-  );
-};
-
-export default PerfilMedicos;
