@@ -3,52 +3,64 @@ import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import axios from 'axios';
 import scanmedLogo from './logoBase64';
+import CancelarCita from './CancelarCita';
+import ReprogramarCita from './ReprogramarCita';
 import "./historialCitas.css";
 
 const HistorialCitas = ({ idUsuario }) => {
-  const [historial, setHistorial] = useState(null);
+  const [historial, setHistorial] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [editing, setEditing] = useState({}); 
+  const [editing, setEditing] = useState({});
   const [observaciones, setObservaciones] = useState({});
+  const [showCancelarCita, setShowCancelarCita] = useState(false);
+  const [citaSeleccionada, setCitaSeleccionada] = useState(null);
+  const [showReprogramarCita, setShowReprogramarCita] = useState(false);
+  const [citaAReprogramar, setCitaAReprogramar] = useState(null);
 
   useEffect(() => {
-    console.log("ID del paciente en HistorialCitas:", idUsuario);
-
-    if (!idUsuario) {
-      setError("No se recibió el ID del paciente.");
-      setLoading(false);
-      return;
-    }
-
-    const token = localStorage.getItem("token");
-
-    fetch(`http://localhost:4000/historial/${idUsuario}`, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("No se pudo obtener el historial");
+    const cargarHistorial = async () => {
+      try {
+        if (!idUsuario) {
+          throw new Error("No se recibió el ID del paciente.");
         }
-        return res.json();
-      })
-      .then((data) => {
+
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("No se encontró token de autenticación.");
+        }
+
+        const response = await fetch(`http://localhost:4000/historial/${idUsuario}`, {
+          headers: { Authorization: "Bearer " + token },
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "No se pudo obtener el historial");
+        }
+
+        const data = await response.json();
         setHistorial(data);
-        setLoading(false);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error("Error al cargar historial:", err);
+        
         setError(err.message);
+        
+        if (err.message.includes("token") || err.message.includes("autenticación")) {
+          window.location.href = "/login";
+        }
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    cargarHistorial();
   }, [idUsuario]);
 
   const handleCheckbox = (id) => {
     setEditing((prev) => ({ ...prev, [id]: !prev[id] }));
     if (!editing[id]) {
-      const existing = historial.find((c) => c.ID_CITA === id).Observacion || "";
+      const existing = historial.find((c) => c.ID_CITA === id)?.Observacion || "";
       setObservaciones((prev) => ({ ...prev, [id]: existing }));
     }
   };
@@ -64,7 +76,8 @@ const HistorialCitas = ({ idUsuario }) => {
     axios
       .post(
         `http://localhost:4000/api/resultados/${id}/observacion`,
-        { observacion: obs }
+        { observacion: obs },
+        { headers: { Authorization: "Bearer " + localStorage.getItem("token") } }
       )
       .then(() => {
         setHistorial((prev) =>
@@ -77,40 +90,42 @@ const HistorialCitas = ({ idUsuario }) => {
       .catch((err) => alert("Error al guardar: " + err.message));
   };
 
-  const cancelarCita = async (idCita) => {
-    const token = localStorage.getItem("token");
-    
-    if (!window.confirm("¿Está seguro que desea cancelar esta cita?")) {
-      return;
-    }
+  const handleCancelarClick = (idCita) => {
+    setCitaSeleccionada(idCita);
+    setShowCancelarCita(true);
+  };
 
-    try {
-      const response = await fetch(`http://localhost:4000/api/citas/${idCita}/cancelar`, {
-        method: "PUT",
-        headers: {
-          "Authorization": "Bearer " + token,
-          "Content-Type": "application/json"
-        }
-      });
+  const handleCancelSuccess = () => {
+    setHistorial(prev => 
+      prev.map(cita => 
+        cita.ID_CITA === citaSeleccionada 
+          ? { ...cita, Diagnostico: "Cita cancelada" } 
+          : cita
+      )
+    );
+    setShowCancelarCita(false);
+    setCitaSeleccionada(null);
+  };
 
-      if (!response.ok) {
-        throw new Error("No se pudo cancelar la cita");
-      }
+  const handleReprogramarClick = (cita) => {
+    setCitaAReprogramar(cita);
+    setShowReprogramarCita(true);
+  };
 
-      // Actualizar el estado local para reflejar el cambio
-      setHistorial(prev => 
-        prev.map(cita => 
-          cita.ID_CITA === idCita 
-            ? { ...cita, Diagnostico: "Cita cancelada" } 
-            : cita
-        )
-      );
-      
-      alert("Cita cancelada exitosamente");
-    } catch (error) {
-      console.error("Error al cancelar cita:", error);
-      alert("Error al cancelar la cita: " + error.message);
-    }
+  const handleReprogramarSuccess = (citaId, nuevaFechaHora) => {
+    setHistorial(prev => 
+      prev.map(cita => 
+        cita.ID_CITA === citaId 
+          ? { 
+              ...cita, 
+              Fecha_Hora: nuevaFechaHora,
+              Diagnostico: "Cita reprogramada - Pendiente de atención"
+            } 
+          : cita
+      )
+    );
+    setShowReprogramarCita(false);
+    setCitaAReprogramar(null);
   };
 
   const exportarPDF = () => {
@@ -118,9 +133,9 @@ const HistorialCitas = ({ idUsuario }) => {
   
     const head = [["ID Cita", "Nombre Médico", "ID Paciente", "Nombre Paciente", "Fecha y Hora", "Diagnóstico"]];
     const body = historial.map(cita => [
-      cita.ID_PACIENTE,
       cita.ID_CITA,
       cita.Nombre_Medico,
+      cita.ID_PACIENTE,
       cita.Nombre_Paciente,
       new Date(cita.Fecha_Hora).toLocaleString(),
       cita.Diagnostico,
@@ -140,14 +155,14 @@ const HistorialCitas = ({ idUsuario }) => {
   
     doc.save("historial_citas.pdf");
   };
-  
-  if (loading) return <p>Cargando historial...</p>;
-  if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
+
+  if (loading) return <div className="loading">Cargando historial...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
 
   return (
     <div className="historial-container">
       <h2>Historial de Consultas</h2>
-      <button onClick={exportarPDF}>Descargar PDF</button>
+      <button onClick={exportarPDF} className="pdf-button">Descargar PDF</button>
 
       {historial.length === 0 ? (
         <p>No hay consultas registradas.</p>
@@ -205,12 +220,20 @@ const HistorialCitas = ({ idUsuario }) => {
                       onChange={() => handleCheckbox(cita.ID_CITA)}
                     />
                     {cita.Diagnostico === "Cita programada - Pendiente de atención" && (
-                      <button 
-                        className="cancel-btn"
-                        onClick={() => cancelarCita(cita.ID_CITA)}
-                      >
-                        Cancelar Cita
-                      </button>
+                      <>
+                        <button 
+                          className="cancel-btn"
+                          onClick={() => handleCancelarClick(cita.ID_CITA)}
+                        >
+                          Cancelar
+                        </button>
+                        <button 
+                          className="reprogram-btn"
+                          onClick={() => handleReprogramarClick(cita)}
+                        >
+                          Reprogramar
+                        </button>
+                      </>
                     )}
                   </div>
                 </td>
@@ -219,6 +242,27 @@ const HistorialCitas = ({ idUsuario }) => {
           </tbody>
         </table>
       )}
+
+      {showCancelarCita && (
+        <CancelarCita
+          citaId={citaSeleccionada}
+          onCancelSuccess={handleCancelSuccess}
+          onClose={() => setShowCancelarCita(false)}
+        />
+      )}
+
+{showReprogramarCita && citaAReprogramar && (
+  <ReprogramarCita
+    citaId={citaAReprogramar.ID_CITA}
+    medicoId={citaAReprogramar.ID_MEDICO} // Asegúrate que este campo existe
+    fechaOriginal={citaAReprogramar.Fecha_Hora}
+    onReprogramar={handleReprogramarSuccess}
+    onClose={() => {
+      setShowReprogramarCita(false);
+      setCitaAReprogramar(null);
+    }}
+  />
+)}
     </div>
   );
 };
