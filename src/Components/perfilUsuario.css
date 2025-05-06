@@ -53,10 +53,9 @@
 /* ========================= */
 .profile-content {
   flex-grow: 1;
-  padding: 80px;
-  background-color: #ffffff;
+  padding: 20px;
+  background-color: #f8f9fa;
   width: 500px;
-  margin-left: 450px;
 }
 
 .welcome {
@@ -104,25 +103,26 @@
 /* Botones de acción        */
 /* ========================= */
 .actions {
-  width: 300px;
+  width: 200px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   padding: 20px;
-  margin-left: -650px;
-  margin-top: 500px; /*botones*/
+  margin-left: -300px;
+  margin-top: 200px;
 }
 .action-btn {
   width: 100%;
-  background-color: #3c80e7;
+  background-color: #ecf0f1;
   color: black;
   border: none;
   padding: 10px;
-  margin: 60px ;
+  margin: 20px ;
   cursor: pointer;
   font-weight: bold;
   border-radius: 100px;
-  margin-right: 10px;
-  margin-bottom: 10px;
+ 
+  
 }
 
 .action-btn:hover {
@@ -132,47 +132,39 @@
 
 .LogoPerfil{
   width: 350px;
-  margin-left: -1050px;
-  margin-top: 15px;
+  margin-left: 185px;
+  margin-top: 30px;
 }
-.header-btn2 {
+.header-btn {
   background-color: transparent;
-  border: radius;
-  font-size: 30px;
+  border: none;
+  font-size: 15px;
   font-weight: bold;
   color: #2c3e50;
   cursor: pointer;
-  margin-top: -105px;
-  margin-left: -1100px;  
+  margin-top: 500px;
+  
 }
 .header-links {
   display: flex;
   gap: 15px;
 }
 
-.header4 {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  position: relative;
-}
-
 .volver-btn {
-  background-color: #3a94e9;
-  border: none;
-  width: 32px;
-  height: 32px;
-  font-weight: bold;
+  position: fixed;
+  top: 90px; /* 80px (header) + 10px margen */
+  left: 20px;
+  z-index: 2000; /* Mayor que todo */
+  background: #4CAF50;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 15px;
-  transition: background-color 0.2s;
+  font-size: 16px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16);
 }
 
-.volver-btn:hover {
-  background-color: #bcbcbc;
+.perfil-container {
+  min-height: 100vh;
+  background-color: #fff; /* Fondo blanco para asegurar visibilidad */
 }
-
