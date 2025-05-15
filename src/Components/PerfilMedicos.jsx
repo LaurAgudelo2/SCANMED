@@ -105,17 +105,17 @@ const PerfilMedicos = ({ medicoInfo }) => {
           <img src="Logo.png" alt="Logo" className="LogoPerfil" />
           <div className="container-links">
             <div className="container-links-btn">
-              <button className="container-btn">INICIO</button>
+              <button className="container-btn"></button>
             </div>
             <div className="container-links-btn">
-              <button className="container-btn">CERRAR SESIÓN</button>
+              <button className="container-btn"></button>
             </div>
           </div>
         </aside>
   
-        <div className="profile-container">
-          <main className="profile-content">
-            <h2 className="welcome">BIENVENID@ DOCTOR/A "{doctorName}"</h2>
+        <div className="profile-container2">
+          <main className="profile-content5">
+            <h2 className="welcome">BIENVENID@ DOCTOR/A {doctorName}</h2>
             <div className="profile-details">
               <h3>DATOS DEL MÉDICO</h3>
               <div className="info-item">

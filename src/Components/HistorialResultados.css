@@ -1,7 +1,9 @@
 .historial-resultados-container {
-  padding: 20px;
-  max-width: 1000px;
-  margin: 0 auto;
+  padding: 350px;
+  margin-bottom: 200px;
+  margin: o auto;
+  margin-left: 90px;
+  width: 700px;
 }
 
 .resultados-table {
