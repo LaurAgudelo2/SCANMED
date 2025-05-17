@@ -1,20 +1,57 @@
 import React, { useState } from "react";
 import SolicitarCita from "./SolicitarCita";
+import HistorialCitas from "./HistorialCitas";
+import HistorialResultados from "./HistorialResultados";
+
+import axios from "axios";
 import "./perfilUsuario.css";
 
 const PerfilUsuario = ({ usuario }) => {
   const [mostrarCita, setMostrarCita] = useState(false);
+  const [mostrarHistorial, setMostrarHistorial] = useState(false);
+  const [mostrarResultados, setMostrarResultados] = useState(false);
+
+  const volverAlPerfil = () => {
+    setMostrarCita(false);
+    setMostrarHistorial(false);
+    setMostrarResultados(false);
+
+
+  };
+
 
   return (
     <div className="perfil-container">
+          {/* Botón de volver siempre visible cuando está en una subvista */}
+    {(mostrarCita || mostrarHistorial || mostrarResultados ) && (
+      <button 
+        className="volver-btn"
+        onClick={volverAlPerfil}
+      >
+        ← Volver al perfil
+      </button>
+    )}
+
       {mostrarCita ? (
-        <SolicitarCita />
+        <>
+      <SolicitarCita onVolver={volverAlPerfil} />
+</>
+      ) : mostrarHistorial ? (
+        <>
+          <HistorialCitas idUsuario={usuario.ID_USUARIO} />        
+        </>
+
+      ) : mostrarResultados ? (  // <-- Esta condición DEBE IR ÚLTIMA
+        <>
+          <HistorialResultados idUsuario={usuario.ID_USUARIO} />
+        </>
       ) : (
         <>
+
           {/* Barra lateral */}
           <aside className="sidebar">
             <div className="user-info">
-              <h3>{usuario?.Primer_nombre || "Aquí nombre del usuario"}</h3>
+              <h3>{usuario?.Primer_Nombre || "Aquí nombre del usuario"}</h3>
             </div>
             <button className="sidebar-btn">NUESTROS SERVICIOS</button>
             <button className="sidebar-btn">CONTACTANOS</button>
@@ -22,16 +59,18 @@ const PerfilUsuario = ({ usuario }) => {
 
           {/* Contenido principal */}
           <main className="profile-content">
-            <h2 className="welcome">BIENVENID@ "{usuario?.nombre || "Nombre del usuario"}"</h2>
+            <h2 className="welcome">BIENVENID@ "{usuario?.Primer_Nombre || "Nombre del usuario"}"</h2>
             <div className="profile-details">
               <h3>MI PERFIL</h3>
               <div className="info-item">
                 <span className="label">NOMBRE</span>
-                <span className="value">{usuario?.nombre || "-"}</span>
+                <span className="value">{usuario?.Primer_Nombre || "-"}</span>
               </div>
               <div className="info-item">
                 <span className="label">APELLIDOS</span>
-                <span className="value">{usuario?.apellidos || "-"}</span>
+                <span className="value">
+                  {usuario?.Primer_Apellido} {usuario?.Segundo_Apellido || ""}
+                </span>
               </div>
               <div className="info-item">
                 <span className="label">EDAD</span>
@@ -43,24 +82,24 @@ const PerfilUsuario = ({ usuario }) => {
               </div>
               <div className="info-item">
                 <span className="label">NÚMERO DE DOCUMENTO</span>
-                <span className="value">{usuario?.NumDocumento || "-"}</span>
+                <span className="value">{usuario?.Num_Documento || "-"}</span>
               </div>
               <div className="info-item">
                 <span className="label">DIRECCIÓN</span>
-                <span className="value">{usuario?.direccion || "-"}</span>
+                <span className="value">{usuario?.Direccion || "-"}</span>
               </div>
               <div className="info-item">
                 <span className="label">CELULAR</span>
-                <span className="value">{usuario?.celular || "-"}</span>
+                <span className="value">{usuario?.Telefono || "-"}</span>
               </div>
               <div className="info-item">
                 <span className="label">EMAIL</span>
-                <span className="value">{usuario?.email || "-"}</span>
+                <span className="value">{usuario?.Correo_Electronico || "-"}</span>
               </div>
             </div>
           </main>
 
-          {/* Botones de acción */}
+          {/* Botones de acción arriba */}
           <aside className="header-section">
             <img src="Logo.png" alt="Logo" className="LogoPerfil" />
             <div className="header-links">
@@ -69,11 +108,21 @@ const PerfilUsuario = ({ usuario }) => {
             </div>
           </aside>
 
-          {/* Botones de acción */}
+          {/* Botones de acción abajo */}
           <aside className="actions">
-            <button className="action-btn" onClick={() => setMostrarCita(true)}>SOLICITAR CITA</button>
-            <button className="action-btn">RESULTADOS</button>
-            <button className="action-btn">HISTORIAL</button>
+            <button className="action-btn" onClick={() => setMostrarCita(true)}>
+              SOLICITAR CITA
+            </button>
+            <button className="action-btn" onClick={() => setMostrarResultados(true)}>
+              RESULTADOS
+            </button>
+              {/* Botón visible para todos durante pruebas */}
+
+            <button className="action-btn" onClick={() => setMostrarHistorial(true)}>
+              HISTORIAL
+            </button>
+            {mostrarHistorial && <HistorialCitas idUsuario={usuario?.ID_USUARIO} />}
+
           </aside>
         </>
       )}

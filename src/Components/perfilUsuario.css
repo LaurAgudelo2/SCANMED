@@ -149,3 +149,22 @@
   display: flex;
   gap: 15px;
 }
+
+.volver-btn {
+  position: fixed;
+  top: 90px; /* 80px (header) + 10px margen */
+  left: 20px;
+  z-index: 2000; /* Mayor que todo */
+  background: #4CAF50;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+}
+
+.perfil-container {
+  min-height: 100vh;
+  background-color: #fff; /* Fondo blanco para asegurar visibilidad */
+}

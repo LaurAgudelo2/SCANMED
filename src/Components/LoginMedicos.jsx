@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import axios from 'axios';
 import PerfilMedicos from './PerfilMedicos';
 import './LoginMedicos.css';
@@ -7,6 +7,7 @@ const LoginMedicos = () => {
   const [logueado, setLogueado] = useState(false);
   const [credenciales, setCredenciales] = useState({ correo: '', contrasena: '' });
   const [error, setError] = useState('');
+  const [medicoInfo, setMedicoInfo] = useState(null);
 
   const handleChange = (e) => {
     setCredenciales({ ...credenciales, [e.target.name]: e.target.value });
@@ -14,24 +15,36 @@ const LoginMedicos = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError('');
-
+    setError("");
+  
     try {
-      const response = await axios.post('http://localhost:4000/api/login', credenciales);
-      const { success, rol } = response.data;
+      const { data } = await axios.post("http://localhost:4000/api/login", credenciales);
+  
+      if (data.success && data.role === "MEDICO") {
+        // Combina datos de usuario y médico
+// En tu LoginMedicos.jsx, crea medicoInfo así:
+        setMedicoInfo({
+          medicoId: data.medico.ID_MEDICO,
+          nombre: `${data.usuario.Primer_Nombre} ${data.usuario.Segundo_Nombre}`,
+          ID_SERVICIO: data.medico.ID_SERVICIO,
+          Numero_Licencia: data.medico.Numero_Licencia,
+          // si quieres otros campos del usuario (correo, etc), también puedes agregarlos
+        });
 
-      if (success && rol === 'MEDICO') {
         setLogueado(true);
+        localStorage.setItem("token", data.token); //  Después de setLogueado(true)
       } else {
-        setError("No tienes acceso como médico.");
+        setError("No tienes permisos de médico");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Error al iniciar sesión.");
+      console.error("Error completo:", err); // 👈 Verifica el error real en consola
+      setError("Error al conectar con el servidor");
     }
   };
 
-  if (logueado) {
-    return <PerfilMedicos />;
+  // Si ya está logueado, muestro perfil y paso los datos del médico
+  if (logueado && medicoInfo?.medicoId) { // Usa optional chaining
+    return <PerfilMedicos medicoInfo={medicoInfo} />;
   }
 
   return (
