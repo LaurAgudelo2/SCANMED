@@ -48,19 +48,13 @@ const PerfilUsuario = ({ usuario }) => {
       ) : (
         <>
 
-          {/* Barra lateral */}
-          <aside className="sidebar">
-            <div className="user-info">
-              <h3>{usuario?.Primer_Nombre || "Aquí nombre del usuario"}</h3>
-            </div>
-            <button className="sidebar-btn">NUESTROS SERVICIOS</button>
-            <button className="sidebar-btn">CONTACTANOS</button>
-          </aside>
+
 
           {/* Contenido principal */}
           <main className="profile-content">
-            <h2 className="welcome">BIENVENID@ "{usuario?.Primer_Nombre || "Nombre del usuario"}"</h2>
-            <div className="profile-details">
+          <h2 className="welcome">
+          BIENVENIDA/0 {usuario?.Primer_Nombre || "Nombre"} {usuario?.Primer_Apellido || "Apellido"}</h2>            
+          <div className="profile-details">
               <h3>MI PERFIL</h3>
               <div className="info-item">
                 <span className="label">NOMBRE</span>
@@ -76,10 +70,7 @@ const PerfilUsuario = ({ usuario }) => {
                 <span className="label">EDAD</span>
                 <span className="value">{usuario?.Edad || "-"}</span>
               </div>
-              <div className="info-item">
-                <span className="label">TIPO DE DOCUMENTO</span>
-                <span className="value">{usuario?.tipoDocumento || "-"}</span>
-              </div>
+             
               <div className="info-item">
                 <span className="label">NÚMERO DE DOCUMENTO</span>
                 <span className="value">{usuario?.Num_Documento || "-"}</span>
@@ -109,21 +100,19 @@ const PerfilUsuario = ({ usuario }) => {
           </aside>
 
           {/* Botones de acción abajo */}
-          <aside className="actions">
-            <button className="action-btn" onClick={() => setMostrarCita(true)}>
-              SOLICITAR CITA
-            </button>
-            <button className="action-btn" onClick={() => setMostrarResultados(true)}>
-              RESULTADOS
-            </button>
-              {/* Botón visible para todos durante pruebas */}
+          <aside className="action-row2">
+  <button className="action-btn" onClick={() => setMostrarCita(true)}>
+    SOLICITAR CITA
+  </button>
+  <button className="action-btn" onClick={() => setMostrarResultados(true)}>
+    RESULTADOS
+  </button>
+  <button className="action-btn" onClick={() => setMostrarHistorial(true)}>
+    HISTORIAL
+  </button>
+  {mostrarHistorial && <HistorialCitas idUsuario={usuario?.ID_USUARIO} />}
+</aside>
 
-            <button className="action-btn" onClick={() => setMostrarHistorial(true)}>
-              HISTORIAL
-            </button>
-            {mostrarHistorial && <HistorialCitas idUsuario={usuario?.ID_USUARIO} />}
-
-          </aside>
         </>
       )}
     </div>

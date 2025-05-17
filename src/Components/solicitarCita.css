@@ -29,8 +29,9 @@
   padding: 20px;
   border-radius: 0 0 10px 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 2px;
-  margin-left: -350px;
+  margin-top: 150px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .nav a {
@@ -106,7 +107,7 @@ input, select {
   box-sizing: border-box;
 }
 
-.btn {
+.btn2 {
   background-color: #4CAF50;
   color: white;
   padding: 12px 24px;
@@ -170,117 +171,5 @@ input, select {
   flex-direction: column;
   align-items: center;
   width: 100%;
-}
-/* Estilos para el modal de pago */
-.payment-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.payment-container {
-  background-color: white;
-  padding: 25px;
-  border-radius: 10px;
-  width: 100%;
-  max-width: 500px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  position: relative;
-}
-
-.close-btn {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #666;
-}
-
-.payment-container h2 {
-  margin-top: 0;
-  color: #2c3e50;
-  text-align: center;
-}
-
-.payment-summary {
-  background-color: #f8f9fa;
-  padding: 15px;
-  border-radius: 5px;
-  margin-bottom: 20px;
-}
-
-.payment-summary p {
-  margin: 5px 0;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 500;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-.form-row {
-  display: flex;
-  gap: 15px;
-}
-
-.form-row .form-group {
-  flex: 1;
-}
-
-.pay-btn {
-  width: 100%;
-  padding: 12px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.3s;
-}
-
-.pay-btn:hover {
-  background-color: #45a049;
-}
-
-.pay-btn:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-
-.payment-security {
-  text-align: center;
-  margin-top: 15px;
-  font-size: 14px;
-  color: #666;
-}
-
-.test-card-info {
-  font-size: 12px;
-  margin-top: 10px;
-  color: #666;
+  padding-top: 400px; /* Espacio adicional */
 }

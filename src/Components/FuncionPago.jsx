@@ -16,6 +16,7 @@ const FuncionPago = ({ servicio, precio, onPaymentSuccess, onClose, formData }) 
   const formatCardNumber = (value) => {
     const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
     const matches = v.match(/\d{4,16}/g);
+<<<<<<< HEAD
     const match = matches && matches[0] || '';
     const parts = [];
     
@@ -28,18 +29,35 @@ const FuncionPago = ({ servicio, precio, onPaymentSuccess, onClose, formData }) 
     } else {
       return value;
     }
+=======
+    const match = (matches && matches[0]) || '';
+    const parts = [];
+
+    for (let i = 0, len = match.length; i < len; i += 4) {
+      parts.push(match.substring(i, i + 4));
+    }
+
+    return parts.length ? parts.join(' ') : value;
+>>>>>>> 18d6e957127b674d333627abe55e985f8357cbaf
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 18d6e957127b674d333627abe55e985f8357cbaf
     if (name === 'cardNumber') {
       setPaymentData(prev => ({
         ...prev,
         [name]: formatCardNumber(value)
       }));
     } else if (name === 'expiryDate') {
+<<<<<<< HEAD
       // Formato MM/AA
+=======
+>>>>>>> 18d6e957127b674d333627abe55e985f8357cbaf
       let formattedValue = value.replace(/\D/g, '');
       if (formattedValue.length > 2) {
         formattedValue = formattedValue.substring(0, 2) + '/' + formattedValue.substring(2, 4);
@@ -49,7 +67,10 @@ const FuncionPago = ({ servicio, precio, onPaymentSuccess, onClose, formData }) 
         [name]: formattedValue
       }));
     } else if (name === 'cvv') {
+<<<<<<< HEAD
       // Solo números, máximo 4 dígitos
+=======
+>>>>>>> 18d6e957127b674d333627abe55e985f8357cbaf
       setPaymentData(prev => ({
         ...prev,
         [name]: value.replace(/\D/g, '').substring(0, 4)
@@ -63,6 +84,7 @@ const FuncionPago = ({ servicio, precio, onPaymentSuccess, onClose, formData }) 
   };
 
   const validateForm = () => {
+<<<<<<< HEAD
     // Validar número de tarjeta (16 dígitos sin espacios)
     const cardNumberValid = paymentData.cardNumber.replace(/\s/g, '').length === 16;
     
@@ -75,6 +97,13 @@ const FuncionPago = ({ servicio, precio, onPaymentSuccess, onClose, formData }) 
     // Validar CVV (3 o 4 dígitos)
     const cvvValid = /^[0-9]{3,4}$/.test(paymentData.cvv);
     
+=======
+    const cardNumberValid = paymentData.cardNumber.replace(/\s/g, '').length === 16;
+    const cardNameValid = paymentData.cardName.trim().length >= 3;
+    const expiryValid = /^(0[1-9]|1[0-2])\/?([0-9]{2})$/.test(paymentData.expiryDate);
+    const cvvValid = /^[0-9]{3,4}$/.test(paymentData.cvv);
+
+>>>>>>> 18d6e957127b674d333627abe55e985f8357cbaf
     return cardNumberValid && cardNameValid && expiryValid && cvvValid;
   };
 
@@ -89,12 +118,19 @@ const FuncionPago = ({ servicio, precio, onPaymentSuccess, onClose, formData }) 
     }
 
     try {
+<<<<<<< HEAD
       // Simular procesamiento de pago
       await new Promise(resolve => setTimeout(resolve, 1500));
       
       // Registrar el pago en el backend
       const response = await axios.post("http://localhost:4000/api/pagos", {
         ID_PACIENTE: 1, // Debería obtenerse del usuario autenticado
+=======
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      const response = await axios.post("http://localhost:4000/api/pagos", {
+        ID_PACIENTE: 1, // Se recomienda obtener del usuario autenticado
+>>>>>>> 18d6e957127b674d333627abe55e985f8357cbaf
         ID_SERVICIO: formData.servicioId,
         monto: precio,
         metodo_pago: 'Tarjeta de Crédito',
@@ -115,7 +151,11 @@ const FuncionPago = ({ servicio, precio, onPaymentSuccess, onClose, formData }) 
           `,
           icon: 'success'
         });
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> 18d6e957127b674d333627abe55e985f8357cbaf
         onPaymentSuccess();
       } else {
         throw new Error(response.data.message || 'Error en el pago');
@@ -135,14 +175,24 @@ const FuncionPago = ({ servicio, precio, onPaymentSuccess, onClose, formData }) 
         <button className="close-btn" onClick={onClose} aria-label="Cerrar">
           &times;
         </button>
+<<<<<<< HEAD
         
         <h2>Pagar Servicio Médico</h2>
         
+=======
+
+        <h2>Pagar Servicio Médico</h2>
+
+>>>>>>> 18d6e957127b674d333627abe55e985f8357cbaf
         <div className="payment-summary">
           <p><strong>Servicio:</strong> {servicio}</p>
           <p><strong>Total a pagar:</strong> ${precio.toFixed(2)}</p>
         </div>
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> 18d6e957127b674d333627abe55e985f8357cbaf
         <form onSubmit={handleSubmit} noValidate>
           <div className="form-group">
             <label htmlFor="cardNumber">Número de Tarjeta</label>
@@ -157,7 +207,11 @@ const FuncionPago = ({ servicio, precio, onPaymentSuccess, onClose, formData }) 
               required
             />
           </div>
+<<<<<<< HEAD
           
+=======
+
+>>>>>>> 18d6e957127b674d333627abe55e985f8357cbaf
           <div className="form-group">
             <label htmlFor="cardName">Nombre en la Tarjeta</label>
             <input
@@ -170,7 +224,11 @@ const FuncionPago = ({ servicio, precio, onPaymentSuccess, onClose, formData }) 
               required
             />
           </div>
+<<<<<<< HEAD
           
+=======
+
+>>>>>>> 18d6e957127b674d333627abe55e985f8357cbaf
           <div className="form-row">
             <div className="form-group">
               <label htmlFor="expiryDate">Fecha de Expiración</label>
@@ -185,7 +243,11 @@ const FuncionPago = ({ servicio, precio, onPaymentSuccess, onClose, formData }) 
                 required
               />
             </div>
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> 18d6e957127b674d333627abe55e985f8357cbaf
             <div className="form-group">
               <label htmlFor="cvv">CVV</label>
               <input
@@ -200,13 +262,21 @@ const FuncionPago = ({ servicio, precio, onPaymentSuccess, onClose, formData }) 
               />
             </div>
           </div>
+<<<<<<< HEAD
           
+=======
+
+>>>>>>> 18d6e957127b674d333627abe55e985f8357cbaf
           {paymentData.error && (
             <div className="payment-error">
               {paymentData.error}
             </div>
           )}
+<<<<<<< HEAD
           
+=======
+
+>>>>>>> 18d6e957127b674d333627abe55e985f8357cbaf
           <button
             type="submit"
             className="pay-btn"
@@ -218,11 +288,19 @@ const FuncionPago = ({ servicio, precio, onPaymentSuccess, onClose, formData }) 
                 Procesando...
               </>
             ) : (
+<<<<<<< HEAD
               `Pagar $${precio.toFixed(2)}`
             )}
           </button>
         </form>
         
+=======
+              <>Pagar ${precio.toFixed(2)}</>
+            )}
+          </button>
+        </form>
+
+>>>>>>> 18d6e957127b674d333627abe55e985f8357cbaf
         <div className="payment-security">
           <p>🔒 Pago seguro con encriptación SSL</p>
           <div className="test-card-info">
@@ -237,4 +315,8 @@ const FuncionPago = ({ servicio, precio, onPaymentSuccess, onClose, formData }) 
   );
 };
 
+<<<<<<< HEAD
 export default FuncionPago;
+=======
+export default FuncionPago;
+>>>>>>> 18d6e957127b674d333627abe55e985f8357cbaf
