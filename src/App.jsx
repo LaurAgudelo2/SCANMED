@@ -9,6 +9,7 @@ import InicioSesion from "./Components/InicioSesion";
 import Registrarse from "./Components/Registrarse";
 import LoginMedicos from "./Components/LoginMedicos";
 import SolicitarCita from "./Components/SolicitarCita";
+import LoginAdmin from "./Components/LoginAdmin";
 
 const Header = () => (
   <header className="header">
@@ -39,6 +40,7 @@ const HeroSection = ({
   setMostrarInicioSesion,
   setMostrarRegistrarse,
   setMostrarLoginMedicos,
+  setMostrarLoginAdmin,
 }) => {
   const [mostrarOpciones, setMostrarOpciones] = useState(false);
 
@@ -67,6 +69,45 @@ const HeroSection = ({
           <button className="btnZona">ZONA TRANSICIONAL</button>
           {mostrarOpciones && (
             <div className="dropdown-menu">
+              <button
+                className="dropdown-btn"
+                onClick={() => setMostrarLoginAdmin(true)}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width={24}
+                  height={24}
+                  viewBox="0 0 24 24"
+                >
+                  <g
+                    fill="none"
+                    stroke="currentColor"
+                    strokeDasharray={28}
+                    strokeDashoffset={28}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                  >
+                    <path d="M4 21v-1c0 -3.31 2.69 -6 6 -6h4c3.31 0 6 2.69 6 6v1">
+                      <animate
+                        fill="freeze"
+                        attributeName="stroke-dashoffset"
+                        dur="0.4s"
+                        values="28;0"
+                      ></animate>
+                    </path>
+                    <path d="M12 11c-2.21 0 -4 -1.79 -4 -4c0 -2.21 1.79 -4 4 -4c2.21 0 4 1.79 4 4c0 2.21 -1.79 4 -4 4Z">
+                      <animate
+                        fill="freeze"
+                        attributeName="stroke-dashoffset"
+                        begin="0.4s"
+                        dur="0.4s"
+                        values="28;0"
+                      ></animate>
+                    </path>
+                  </g>
+                </svg>
+              </button>
               <button
                 className="dropdown-btn"
                 onClick={() => setMostrarRegistrarse(true)}
@@ -251,6 +292,7 @@ const ScanmedPage = () => {
   const [mostrarInicioSesion, setMostrarInicioSesion] = useState(false);
   const [mostrarRegistrarse, setMostrarRegistrarse] = useState(false);
   const [mostrarLoginMedicos, setMostrarLoginMedicos] = useState(false);
+  const [mostrarLoginAdmin, setMostrarLoginAdmin] = useState(false);
   const [mostratCitas, setMostrarCitas] = useState(false);
 
   return (
@@ -265,6 +307,8 @@ const ScanmedPage = () => {
         <InicioSesion setUsuarioLogueado={setUsuarioLogueado} />
       ) : mostrarRegistrarse ? (
         <Registrarse />
+      ) : mostrarLoginAdmin ? (
+        <LoginAdmin />
       ) : mostrarLoginMedicos ? (
         <LoginMedicos />
       ) : (
@@ -276,6 +320,7 @@ const ScanmedPage = () => {
             setMostrarInicioSesion={setMostrarInicioSesion}
             setMostrarRegistrarse={setMostrarRegistrarse}
             setMostrarLoginMedicos={setMostrarLoginMedicos}
+            setMostrarLoginAdmin={setMostrarLoginAdmin}
           />
           <BuildingSection />
           <SedeSection />
@@ -289,3 +334,4 @@ const ScanmedPage = () => {
 };
 
 export default ScanmedPage;
+

@@ -1,0 +1,21 @@
+.admin-nav {
+  display: flex;
+  background: #333;
+  padding: 0.5rem 1rem;
+  align-items: center;
+}
+.admin-nav button {
+  margin-right: 1rem;
+  color: #fff;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.admin-nav button.active {
+  border-bottom: 2px solid #4a90e2;
+}
+.admin-nav .logout {
+  margin-left: auto;
+  color: #f1f1f1;
+}
