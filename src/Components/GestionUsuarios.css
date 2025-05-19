@@ -1,0 +1,19 @@
+.users-mgmt {
+  background: #fff;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.users-mgmt table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.users-mgmt th,
+.users-mgmt td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+}
+.users-mgmt th {
+  background: #f4f4f4;
+  text-align: left;
+}
