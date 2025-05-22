@@ -194,4 +194,8 @@ const PerfilMedicos = ({ medicoInfo }) => {
   );
 }
 
+
 export default PerfilMedicos;
+
+
+

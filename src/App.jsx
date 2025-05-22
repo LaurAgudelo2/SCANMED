@@ -288,4 +288,6 @@ const ScanmedPage = () => {
   );
 };
 
+
 export default ScanmedPage;
+
