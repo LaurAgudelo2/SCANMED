@@ -1,0 +1,168 @@
+.historial-container {
+  padding: 450px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  max-width: 1000px;
+  margin: 40px auto;
+  margin-left: -400px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow-x: auto; /* Para pantallas pequeñas */
+}
+
+.historial-container h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 1.8rem;
+  color: #222;
+  font-weight: 600;
+}
+
+.historial-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+.historial-table th,
+.historial-table td {
+  padding: 14px 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+  white-space: nowrap; /* Evita que se rompan las celdas */
+}
+
+.historial-table th {
+  background-color: #4da3ff;
+  color: #fff;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.historial-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.historial-table tbody tr:hover {
+  background-color: #e1f0ff;
+  transition: background-color 0.3s ease;
+}
+
+.cancel-btn {
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.cancel-btn:hover {
+  background-color: #cc0000;
+}
+
+.historial-table td {
+  vertical-align: middle;
+}
+.loading {
+  padding: 20px;
+  text-align: center;
+  font-size: 18px;
+  color: #666;
+}
+
+.error {
+  padding: 20px;
+  text-align: center;
+  font-size: 18px;
+  color: #d32f2f;
+  background-color: #ffebee;
+  border-radius: 4px;
+  border-left: 4px solid #d32f2f;
+}
+
+.pdf-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.pdf-button:hover {
+  background-color: #45a049;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cancel-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cancel-btn:hover {
+  background-color: #d32f2f;
+}
+
+.save-btn {
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background-color 0.3s;
+}
+
+.save-btn:hover {
+  background-color: #0b7dda;
+}
+
+.char-count {
+  font-size: 12px;
+  color: #666;
+  text-align: right;
+  margin-top: 4px;
+}
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.cancel-btn, .reprogram-btn {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.cancel-btn {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+.reprogram-btn {
+  background-color: #4dabf7;
+  color: white;
+}
+
+.action-buttons input[type="checkbox"] {
+  transform: scale(1.3);
+}

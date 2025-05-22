@@ -4,13 +4,24 @@ import PerfilUsuario from "./PerfilUsuario";
 import RecuperarContraseña from "./RecuperarContraseña"; // Importamos el nuevo componente
 import axios from "axios";
 
-const InicioSesion = () => {
+
+const InicioSesion = ({ setUsuarioLogueado }) => {
   const [logueado, setLogueado] = useState(false);
   const [usuario, setUsuario] = useState(null);  // Nuevo estado para almacenar los datos del usuario
   const [correo, setCorreo] = useState("");
   const [contrasena, setContrasena] = useState("");
   const [error, setError] = useState("");
   const [mostrarRecuperar, setMostrarRecuperar] = useState(false); // Estado para mostrar RecuperarContraseña
+
+  axios.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  }, (error) => {
+    return Promise.reject(error);
+  });
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,8 +34,13 @@ const InicioSesion = () => {
       });
 
       if (response.data.success) {
+        
+        localStorage.setItem('token', response.data.token);  // Asegúrate de que 'token' sea lo que tu backend envíe como respuesta
+
         setLogueado(true);
         setUsuario(response.data.usuario);  // Almacena los datos del usuario
+        setUsuarioLogueado(response.data.usuario);
+
       }
     } catch (err) {
       if (err.response) {
