@@ -67,7 +67,7 @@ const PerfilMedicos = ({ medicoInfo }) => {
       if (res.data.success) setCitas(res.data.data);
     })
     .catch(err => {
-      console.error("Error cargando citas:", err);
+      console.error("Error cargando las citas:", err);
       setError("Error al obtener citas");
     })
     .finally(() => setLoading(false));
