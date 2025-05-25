@@ -1,0 +1,144 @@
+.factura-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.factura-content {
+  background-color: white;
+  width: 100%;
+  max-width: 800px;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.factura-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.factura-close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+}
+
+.factura-close-btn:hover {
+  color: #333;
+}
+
+.factura-empresa {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.factura-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.factura-cliente,
+.factura-pago {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.factura-detalles {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.factura-detalles th,
+.factura-detalles td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.factura-detalles th {
+  background-color: #f2f2f2;
+}
+
+.factura-footer {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 0.9em;
+  color: #666;
+}
+
+.factura-actions {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.factura-print-btn,
+.factura-pdf-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0 10px;
+}
+
+.factura-print-btn:hover,
+.factura-pdf-btn:hover {
+  background-color: #45a049;
+}
+
+.factura-loading,
+.factura-error {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.factura-error {
+  color: #d32f2f;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #factura-print,
+  #factura-print * {
+    visibility: visible;
+  }
+  #factura-print {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+  }
+  .factura-actions {
+    display: none;
+  }
+}

@@ -9,7 +9,34 @@
     background: #fff;
     height: 100vh;
   }
-  
+
+
+
+
+  .citas-container {
+    /* Estilos actuales */
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 800px;
+    margin-left: 350px;
+  }
+
+    .profile-content5 {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 800px;
+    margin-left: 350px;
+    margin-top: -250px;
+
+}
+
   .container-section {
     display: grid;
     grid-template-columns: 70% 30%;
@@ -22,7 +49,7 @@
     gap: 15px;
     margin-top: 1rem;
   }
-  .container-links-btn {
+.container-links-btn {
     display: grid;
     justify-content: center;
     align-items: center;
@@ -45,9 +72,8 @@
     background: #4a90e2;
     color: #fff;
   }
-  
-  
-  /* Cabecera de perfil */
+
+/* Cabecera de perfil */
   .perfil-container {
     display: flex;
     align-items: center;
@@ -72,8 +98,7 @@
     font-size: 1.5rem;
     color: #4a90e2;
   }
-  
-  /* Botones de filtro */
+/* Botones de filtro */
   .citas-filter {
     margin-bottom: 1rem;
   }
@@ -92,7 +117,7 @@
     background: #4a90e2;
     color: #fff;
   }
-  
+
   /* Tabla de citas */
   .citas-table {
     width: 100%;
@@ -122,7 +147,7 @@
   .citas-table tbody tr td {
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
   }
-  
+
   /* Badges de estado */
   .estado-Pendiente {
     color: #e67e22;
@@ -132,7 +157,7 @@
     color: #27ae60;
     font-weight: 600;
   }
-  
+
   /* Mensaje sin citas */
   .sin-citas {
     text-align: center;
@@ -140,3 +165,106 @@
     color: #999;
     font-style: italic;
   }
+
+  .perfil-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  color: #333;
+}
+
+.perfil-header {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+.perfil-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1.5rem;
+  border: 2px solid #4a90e2;
+}
+.perfil-info .perfil-nombre {
+  margin: 0;
+  font-size: 1.75rem;
+  color: #4a90e2;
+}
+.perfil-info .perfil-role {
+  margin: 0.25rem 0 0;
+  color: #777;
+}
+
+.citas-container h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #4a90e2;
+}
+
+.citas-filter {
+  margin-bottom: 1rem;
+}
+.citas-filter .filter-btn {
+  margin-right: 0.75rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #4a90e2;
+  color: #000;
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.citas-filter .filter-btn.active,
+.citas-filter .filter-btn:hover {
+  background: #4a90e2;
+  color: #fff;
+}
+
+.citas-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
+}
+.citas-table th {
+  text-align: left;
+  padding: 0.75rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #555;
+}
+.citas-table td {
+  background: #fff;
+  padding: 0.75rem;
+  color: #333;
+}
+.citas-table tr td:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+.citas-table tr td:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+.citas-table tbody tr td {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.estado-Pendiente {
+  color: #e67e22;
+  font-weight: 600;
+}
+.estado-Realizada {
+  color: #27ae60;
+  font-weight: 600;
+}
+
+.sin-citas {
+  text-align: center;
+  padding: 1.5rem;
+  color: #999;
+  font-style: italic;
+}

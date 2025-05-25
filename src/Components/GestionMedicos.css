@@ -1,0 +1,32 @@
+.gestion-medicos {
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.filtro-especialidad {
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-family: Arial, sans-serif;
+  margin-top: 10px;
+}
+
+thead th {
+  background-color: #f4f4f4;
+  padding: 10px;
+  border-bottom: 2px solid #ccc;
+}
+
+tbody td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
