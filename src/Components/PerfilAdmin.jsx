@@ -1,16 +1,16 @@
-
 import React, { useState, useEffect } from "react";
 import NavBarAdmin from "./NavBarAdmin";
 import GestionUsuarios from "./GestionUsuarios";
 import GestionMedicos from "./GestionMedicos";
 import ManejoCitas from "./ManejoCitas";
+import HistorialExamenes from "./HistorialExamenes";
+import SesionesFacturacion from "./SesionesFacturacion";
 import "./PerfilAdmin.css";
 
 const PerfilAdmin = () => {
   const [section, setSection] = useState("Inicio");
   const [loading, setLoading] = useState(true);
 
-  // Opcional: podrías comprobar aquí si el token y el role en localStorage siguen siendo válidos
   useEffect(() => {
     setLoading(false);
   }, []);
@@ -29,9 +29,9 @@ const PerfilAdmin = () => {
         )}
         {section === "Usuarios" && <GestionUsuarios />}
         {section === "Medicos" && <GestionMedicos />}
-
         {section === "Citas" && <ManejoCitas />}
-
+        {section === "Examenes" && <HistorialExamenes />}
+        {section === "Facturacion" && <SesionesFacturacion />}
       </div>
     </div>
   );

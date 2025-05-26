@@ -1,0 +1,108 @@
+.facturacion-container {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 1rem;
+  }
+  
+  .facturacion-container h2 {
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-size: 1.8rem;
+  }
+  
+  .statistics {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 4px;
+  }
+  
+  .statistics h3 {
+    margin-bottom: 1rem;
+    color: #333;
+    font-size: 1.4rem;
+  }
+  
+  .statistics p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .filters input,
+  .filters select,
+  .filters button {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    min-width: 150px;
+    flex: 1; /* Asegura que los elementos ocupen espacio equitativo */
+  }
+  
+  .filters input:focus,
+  .filters select:focus {
+    outline: none;
+    border-color: #4a90e2;
+  }
+  
+  .filters button {
+    background: #4a90e2;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .filters button:hover {
+    background: #357abd;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  
+  th, td {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 0.9rem;
+  }
+  
+  th {
+    background: #f8f9fa;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  @media (max-width: 768px) {
+    .filters {
+      flex-direction: column;
+    }
+  
+    .filters input,
+    .filters select,
+    .filters button {
+      width: 100%;
+    }
+  
+    th, td {
+      font-size: 0.8rem;
+      padding: 0.5rem;
+    }
+  
+    .statistics {
+      padding: 0.75rem;
+    }
+  }
